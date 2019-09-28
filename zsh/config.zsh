@@ -3,6 +3,11 @@ export CLICOLOR=true
 
 fpath=($ZSH/functions $fpath)
 
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt appendhistory
+
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
@@ -18,6 +23,7 @@ setopt APPEND_HISTORY # adds history
 setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
 
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
@@ -45,7 +51,6 @@ setopt PUSHD_IGNORE_DUPS
 setopt RM_STAR_WAIT
 
 # use magic (this is default, but it can't hurt!)
-setopt ZLE
 setopt NO_HUP
 
 # If I could disable Ctrl-s completely I would!

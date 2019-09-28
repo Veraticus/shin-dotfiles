@@ -1,8 +1,6 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.shin-dotfiles
 
-export ZSH_AUTOSUGGEST_STRATEGY=(history)
-
 # all of our zsh files
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
@@ -10,25 +8,19 @@ config_files=($ZSH/**/*.zsh)
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
 do
-  source $file
+  . $file
 done
 
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
-  source $file
+  . $file
 done
-
-source ~/.zsh_plugins.sh
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
 do
-  source $file
+  . $file
 done
 
 unset config_files
@@ -38,3 +30,33 @@ if [ -z "$TMUX" ]
 then
     tmux attach -t TMUX || tmux new -s TMUX
 fi
+
+# zplugin
+. ~/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+zplugin ice wait"0b" lucid blockf atpull'zplugin creinstall -q .'
+zplugin light zsh-users/zsh-completions
+
+zplugin ice silent wait"1" lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+zplugin ice wait"0a" lucid atload"_zsh_autosuggest_start"
+zplugin light zsh-users/zsh-autosuggestions
+
+zplugin ice wait"0b" lucid
+zplugin light zsh-users/zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+zplugin light MichaelAquilina/zsh-you-should-use
+
+zplugin ice silent wait'1' lucid
+zplugin load romkatv/gitstatus
+
+zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
+zplugin light trapd00r/LS_COLORS

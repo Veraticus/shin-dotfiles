@@ -142,21 +142,22 @@ install_tmux() {
   cd $DOTFILES_ROOT
 }
 
-install_antibody() {
-  if ! command -v "antibody" >/dev/null; then
-    curl -sfL git.io/antibody | sh -s - -b /usr/local/bin;
+install_zplugin() {
+  if [ -d "${HOME}/.zplugin/bin" ]; then
+    success "zplugin installed"
+  else
+    mkdir ~/.zplugin
+    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
   fi
-  zsh -c "autoload -Uz compinit && compinit & rm -rf `antibody home`";
-  zsh -c "autoload -Uz compinit && compinit && antibody bundle < ${DOTFILES_ROOT}/zsh/zsh_plugins.txt > ${HOME}/.zsh_plugins.sh";
-  zsh -c "autoload -Uz compinit && compinit && antibody update";
+  zsh -c "source ~/.zshrc && -zplg-scheduler burst || true"
 
   cd $DOTFILES
 }
 
 install_dotfiles
 install_alacritty
-install_antibody
 install_tmux
+install_zplugin
 
 echo ''
 echo '  All installed!'
