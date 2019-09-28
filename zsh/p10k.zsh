@@ -464,12 +464,12 @@
   # Default context color.
   typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=180
   # Default context format: %n is username, %m is hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
+  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE=''
 
   # Context color when running with privileges.
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=178
   # Context format when running with privileges: bold user@hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@%m'
+  typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE=''
 
   # Don't show context unless running with privileges or in SSH.
   # Tip: Remove the next line to always show context.
