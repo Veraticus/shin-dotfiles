@@ -1,4 +1,4 @@
-#shin-dotfiles
+# shin-dotfiles
 
 Inspired by @ainsleymcgrath and @SalomonSmeke.
 
