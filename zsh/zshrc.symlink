@@ -25,11 +25,6 @@ done
 
 unset config_files
 
-# Start tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  tmux new-session -A -D -s main
-fi
-
 # zplugin
 . ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
@@ -45,14 +40,14 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zplugin ice wait"0a" lucid atload"_zsh_autosuggest_start"
 zplugin light zsh-users/zsh-autosuggestions
 
-zplugin ice wait"0b" lucid
-zplugin light zsh-users/zsh-history-substring-search
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
 zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zplugin light trapd00r/LS_COLORS
 
 zplugin light geometry-zsh/geometry
+
+# Start tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux new-session -A -D -s main
+fi
