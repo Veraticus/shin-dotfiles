@@ -56,9 +56,6 @@ setopt NO_HUP
 # If I could disable Ctrl-s completely I would!
 setopt NO_FLOW_CONTROL
 
-# Keep echo "station" > station from clobbering station
-setopt NO_CLOBBER
-
 # Case insensitive globbing
 setopt NO_CASE_GLOB
 

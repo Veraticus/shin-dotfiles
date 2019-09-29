@@ -56,4 +56,4 @@ zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
 zplugin light trapd00r/LS_COLORS
 
-zplugin light romkatv/powerlevel10k
+zplugin light geometry-zsh/geometry

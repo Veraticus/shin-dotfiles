@@ -1,0 +1,1 @@
+GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_echo}
