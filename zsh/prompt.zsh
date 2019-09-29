@@ -17,7 +17,33 @@ josh_geometry_git() {
   echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(pj.$separator.)geometry_git_details}
 }
 
+
+josh_geometry_ruby() {
+  (( $+commands[ruby] )) || return
+
+  GEOMETRY_RUBY=$(ansi ${GEOMETRY_RUBY_COLOR:=red} ${GEOMETRY_RUBY_SYMBOL:="◆"})
+
+  [[ $(ruby -v) =~ 'ruby ([0-9a-zA-Z.]+)' ]]
+  local ruby_version=$match[1]
+
+  echo -n "${(j: :):-$GEOMETRY_RUBY $ruby_version}"
+}
+
+josh_geometry_path() {
+  local pwd="${PWD/#$HOME/~}"
+
+  if [[ "$pwd" == (#m)[/~] ]]; then
+    dir="$MATCH"
+    unset MATCH
+  else
+    dir="${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}/${pwd:t}"
+  fi
+  ansi ${GEOMETRY_PATH_COLOR:-blue} $dir
+
+}
+
 GEOMETRY_STATUS_SYMBOL="▶"
 GEOMETRY_STATUS_SYMBOL_ERROR="▷"
-GEOMETRY_PROMPT=(geometry_echo geometry_path geometry_status)
+GEOMETRY_PROMPT=(geometry_echo josh_geometry_path geometry_status)
 GEOMETRY_RPROMPT=(geometry_exec_time josh_geometry_git geometry_echo)
+GEOMETRY_INFO=(josh_geometry_ruby geometry_kube)

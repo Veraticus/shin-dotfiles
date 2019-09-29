@@ -159,5 +159,9 @@ install_alacritty
 install_tmux
 install_zplugin
 
+if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
+  brew install exa rg bat
+fi
+
 echo ''
 echo '  All installed!'
