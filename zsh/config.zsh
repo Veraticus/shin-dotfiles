@@ -6,7 +6,6 @@ fpath=($ZSH/functions $fpath)
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
-setopt appendhistory
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_LIST_BEEP
