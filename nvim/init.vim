@@ -142,6 +142,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
+let g:ctrlp_working_path_mode = 'rw'
+let g:ctrlp_dont_split = 'nerdtree'
+
 "*****************************************************************************
 "" NERDTree Configuration
 "*****************************************************************************
