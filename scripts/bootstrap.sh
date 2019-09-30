@@ -138,7 +138,6 @@ install_neovim() {
   else
     mkdir -p $HOME/.config/nvim
     link_file "$DOTFILES_ROOT/nvim/init.vim" "$HOME/.config/nvim"
-    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
   cd $DOTFILES_ROOT
