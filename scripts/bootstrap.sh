@@ -176,6 +176,7 @@ install_zplugin
 
 if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
   brew install exa rg bat nodejs
+  brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 fi
 
 echo ''
