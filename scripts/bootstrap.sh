@@ -129,6 +129,21 @@ install_alacritty () {
   cd $DOTFILES_ROOT
 }
 
+install_neovim() {
+  info 'installing neovim'
+
+  if [ -f "$HOME/.config/nvim/init.vim" ]
+  then
+    success "neovim installed"
+  else
+    mkdir -p $HOME/.config/nvim
+    link_file "$DOTFILES_ROOT/nvim/init.vim" "$HOME/.config/nvim"
+    curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
+
+  cd $DOTFILES_ROOT
+}
+
 install_tmux() {
   info 'installing tmux'
 
@@ -156,11 +171,12 @@ install_zplugin() {
 
 install_dotfiles
 install_alacritty
+install_neovim
 install_tmux
 install_zplugin
 
 if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
-  brew install exa rg bat
+  brew install exa rg bat nodejs
 fi
 
 echo ''
