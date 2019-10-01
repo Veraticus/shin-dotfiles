@@ -37,7 +37,6 @@ setopt AUTO_PUSHD
 setopt AUTO_NAME_DIRS
 
 # If we have a glob this will expand it
-setopt GLOB_COMPLETE
 setopt PUSHD_MINUS
 
 # blank pushd goes to home
@@ -64,35 +63,3 @@ setopt NUMERIC_GLOB_SORT
 # I don't know why I never set this before.
 setopt EXTENDED_GLOB
 
-# hows about arrays be awesome?  (that is, frew${cool}frew has frew surrounding all the variables, not just first and last
-setopt RC_EXPAND_PARAM
-
-# Who doesn't want home and end to work?
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-
-# Incremental search is elite!
-bindkey -M vicmd "/" history-incremental-search-backward
-bindkey -M vicmd "?" history-incremental-search-forward
-
-# Search based on what you typed in already
-bindkey -M vicmd "//" history-beginning-search-backward
-bindkey -M vicmd "??" history-beginning-search-forward
-
-bindkey "\eOP" run-help
-
-# oh wow!  This is killer...  try it!
-bindkey -M vicmd "q" push-line
-
-# it's like, space AND completion.  Gnarlbot.
-bindkey -M viins ' ' magic-space
-
-zle -N newtab
-
-bindkey '^[^[[D' backward-word
-bindkey '^[^[[C' forward-word
-bindkey '^[[5D' beginning-of-line
-bindkey '^[[5C' end-of-line
-bindkey '^[[3~' delete-char
-bindkey '^[^N' newtab
-bindkey '^?' backward-delete-char

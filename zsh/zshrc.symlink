@@ -40,6 +40,10 @@ ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zplugin ice wait"0a" lucid atload"_zsh_autosuggest_start"
 zplugin light zsh-users/zsh-autosuggestions
 
+zstyle ":history-search-multi-word" page-size "11"
+zplugin ice wait"1" lucid
+zplugin load zdharma/history-search-multi-word
+
 zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
