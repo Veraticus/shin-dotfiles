@@ -39,17 +39,12 @@ Plug 'Yggdroot/indentLine'
 Plug 'Raimondi/delimitMate'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/syntastic'
 Plug 'majutsushi/tagbar'
+Plug 'dense-analysis/ale'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
 Plug 'vadv/vim-chef'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-projectionist'
-Plug 'thoughtbot/vim-rspec'
-Plug 'ecomba/vim-ruby-refactoring'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -137,6 +132,9 @@ set scrolloff=3
 "" Status bar
 set laststatus=2
 
+"" Fix gitgutter delays
+set updatetime=100
+
 "" Use modeline overrides
 set modeline
 set modelines=10
@@ -148,7 +146,7 @@ set titlestring=%F
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 let g:airline_theme = 'dracula'
-let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
@@ -157,6 +155,9 @@ let g:airline_skip_empty_sections = 1
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_dont_split = 'nerdtree'
 
+let g:ale_sign_column_always = 1
+
+let g:ale_linters = {'ruby': ['ruby','solargraph']}
 "*****************************************************************************
 "" NERDTree Configuration
 "*****************************************************************************
@@ -201,15 +202,6 @@ nmap <leader>m :NERDTreeToggle<CR>
 "" Plugin Settings
 "*****************************************************************************
 nmap <leader>t :TagbarToggle<CR>
-
-" syntastic
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors = 1
 
 " ruby
 let g:rubycomplete_buffer_loading = 1
