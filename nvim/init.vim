@@ -30,7 +30,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'hashivim/vim-terraform'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -41,6 +40,8 @@ Plug 'severin-lemaignan/vim-minimap'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
@@ -95,6 +96,17 @@ let g:session_command_aliases = 1
 
 syntax on
 color dracula
+
+"*****************************************************************************
+"" Helpful commands
+"*****************************************************************************
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+no <C-j> <C-w>j
+no <C-k> <C-w>k
+no <C-l> <C-w>l
+no <C-h> <C-w>h
 
 "*****************************************************************************
 "" Visual Settings
@@ -152,18 +164,41 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
-let g:ctrlp_working_path_mode = 'rw'
-let g:ctrlp_dont_split = 'nerdtree'
-
 let g:ale_sign_column_always = 1
+let g:ale_linters = {'ruby': ['ruby','solargraph'], 'terraform': ['terraform','tflint']}
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],'terraform': ['terraform']}
+let g:ale_fix_on_save = 1
 
-let g:ale_linters = {'ruby': ['ruby','solargraph']}
+"" fzf
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab drop',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+nmap <C-p> :GFiles<CR>
+nmap <Leader>F :Files<CR>
+nmap <Leader>H :Helptags!<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>' :Marks<CR>
+nmap <Leader>/ :Rg<Space>
+nmap <Leader>C :Commands<CR>
+nmap <Leader>: :History:<CR>
+nmap <Leader>M :Maps<CR>
+nmap <Leader>s :Filetypes<CR>
+
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 "*****************************************************************************
 "" NERDTree Configuration
 "*****************************************************************************
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -215,7 +250,7 @@ augroup vimrc-ruby
 augroup END
 
 "*****************************************************************************
-"" ctags 
+"" ctags
 "*****************************************************************************
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
