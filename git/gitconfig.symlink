@@ -3,7 +3,7 @@
   email = veraticus@gmail.com
 	signingkey = 03673812455C53B6
 [core]
-  editor = code -n -w
+  editor = nvim 
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore
 [web]
