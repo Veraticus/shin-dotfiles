@@ -134,10 +134,17 @@ install_neovim() {
 
   if [ -f "$HOME/.config/nvim/init.vim" ]
   then
-    success "neovim installed"
+    success "neovim config installed"
   else
     mkdir -p $HOME/.config/nvim
     link_file "$DOTFILES_ROOT/nvim/init.vim" "$HOME/.config/nvim"
+  fi
+
+  if [ -f "$HOME/.config/nvim/coc-settings.json" ]
+  then
+    success "coc.nvim installed"
+  else
+    link_file "$DOTFILES_ROOT/nvim/coc-settings.json" "$HOME/.config/nvim"
   fi
 
   cd $DOTFILES_ROOT
@@ -175,7 +182,7 @@ install_tmux
 install_zplugin
 
 if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
-  brew install exa rg bat nodejs
+  brew install exa rg bat nodejs fzf
   brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 fi
 
