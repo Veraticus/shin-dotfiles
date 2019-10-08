@@ -45,6 +45,7 @@ Plug 'junegunn/fzf.vim'
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
 Plug 'vadv/vim-chef'
+Plug 'towolf/vim-helm'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
