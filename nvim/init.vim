@@ -109,7 +109,8 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-let g:dirvish_git_show_ignored = 1
+noremap <Leader>y "*y
+noremap <Leader>p "*p
 
 "*****************************************************************************
 "" coc.nvim
