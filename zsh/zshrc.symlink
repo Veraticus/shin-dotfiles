@@ -56,3 +56,5 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [
   exec tmux new-session -A -D -s main
 fi
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
