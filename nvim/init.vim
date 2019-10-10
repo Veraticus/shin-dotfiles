@@ -87,6 +87,7 @@ set noswapfile
 set fileformats=unix,dos,mac
 set showcmd
 set shell=zsh
+set inccommand=nosplit
 
 " session management
 let g:session_directory = "~/.config/nvim/session"
