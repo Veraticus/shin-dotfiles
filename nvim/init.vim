@@ -46,6 +46,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'hashivim/vim-terraform'
 Plug 'vadv/vim-chef'
 Plug 'towolf/vim-helm'
+Plug 'vim-ruby/vim-ruby'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
