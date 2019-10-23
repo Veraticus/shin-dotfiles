@@ -324,6 +324,12 @@ augroup vimrc-ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
+augroup yaml
+  autocmd!
+  autocmd BufNewFile,BufRead *.yaml,*.yml setlocal filetype=yaml
+  autocmd FileType yaml set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
+augroup END
+
 "*****************************************************************************
 "" ctags
 "*****************************************************************************
