@@ -5,6 +5,10 @@ if has('vim_starting')
   set nocompatible               " Be iMproved
 endif
 
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
+
 let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
 let g:vim_bootstrap_editor = "nvim"
@@ -50,6 +54,26 @@ Plug 'vim-ruby/vim-ruby'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
+
+"*****************************************************************************
+"" Terminal Setup
+"*****************************************************************************
+tnoremap <Esc> <C-\><C-n>
+
+" Quickly create a new terminal in a new tab
+tnoremap <Leader>c <C-\><C-n>:tab new<CR>:term<CR>
+noremap <Leader>c :tab new<CR>:term<CR>
+inoremap <Leader>c <Esc>:tab new<CR>:term<CR>
+
+" Quickly create a new terminal in a vertical split
+tnoremap <Leader>% <C-\><C-n>:vsp<CR><C-w><C-w>:term<CR>
+noremap <Leader>% :vsp<CR><C-w><C-w>:term<CR>
+inoremap <Leader>% <Esc>:vsp<CR><C-w><C-w>:term<CR>
+
+" Quickly create a new terminal in a horizontal split
+tnoremap <Leader>" <C-\><C-n>:sp<CR><C-w><C-w>:term<CR>
+noremap <Leader>" :sp<CR><C-w><C-w>:term<CR>
+inoremap <Leader>" <Esc>:sp<CR><C-w><C-w>:term<CR>
 
 "*****************************************************************************
 "" Basic Setup
@@ -113,6 +137,8 @@ set signcolumn=yes
 
 noremap <Leader>y "*y
 noremap <Leader>p "*p
+
+autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 "*****************************************************************************
 "" coc.nvim
@@ -216,10 +242,18 @@ nnoremap  <silent> <Leader><tab>  :if &modifiable && !&readonly && &modified <CR
 nnoremap  <silent> <Leader><s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 nnoremap  <Leader><Leader> <C-^>
 
-no <C-j> <C-w>j
-no <C-k> <C-w>k
-no <C-l> <C-w>l
-no <C-h> <C-w>h
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+inoremap <C-h> <Esc><C-w>h
+inoremap <C-j> <Esc><C-w>j
+inoremap <C-k> <Esc><C-w>k
+inoremap <C-l> <Esc><C-w>l
 
 "*****************************************************************************
 "" Visual Settings
@@ -290,7 +324,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 nmap <C-p> :GFiles<CR>
-nmap <Leader>F :Files<CR>
+nmap <Leader>f :Files<CR>
 nmap <Leader>H :Helptags!<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
@@ -304,6 +338,7 @@ nmap <Leader>C :Commands<CR>
 nmap <Leader>: :History:<CR>
 nmap <Leader>M :Maps<CR>
 nmap <Leader>s :Filetypes<CR>
+nmap <Leader>d :exe ':Rg ' . expand('<cword>')<CR>
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
