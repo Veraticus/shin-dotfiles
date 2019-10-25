@@ -56,26 +56,6 @@ Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 "*****************************************************************************
-"" Terminal Setup
-"*****************************************************************************
-tnoremap <Esc> <C-\><C-n>
-
-" Quickly create a new terminal in a new tab
-tnoremap <Leader>c <C-\><C-n>:tab new<CR>:term<CR>
-noremap <Leader>c :tab new<CR>:term<CR>
-inoremap <Leader>c <Esc>:tab new<CR>:term<CR>
-
-" Quickly create a new terminal in a vertical split
-tnoremap <Leader>% <C-\><C-n>:vsp<CR><C-w><C-w>:term<CR>
-noremap <Leader>% :vsp<CR><C-w><C-w>:term<CR>
-inoremap <Leader>% <Esc>:vsp<CR><C-w><C-w>:term<CR>
-
-" Quickly create a new terminal in a horizontal split
-tnoremap <Leader>" <C-\><C-n>:sp<CR><C-w><C-w>:term<CR>
-noremap <Leader>" :sp<CR><C-w><C-w>:term<CR>
-inoremap <Leader>" <Esc>:sp<CR><C-w><C-w>:term<CR>
-
-"*****************************************************************************
 "" Basic Setup
 "*****************************************************************************
 set encoding=utf-8
@@ -234,6 +214,26 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 let g:airline#extensions#coc#enabled = 1
+
+"*****************************************************************************
+"" Terminal Setup
+"*****************************************************************************
+tnoremap <Esc> <C-\><C-n>
+
+" Quickly create a new terminal in a new tab
+tnoremap <Leader>c <C-\><C-n>:tab new<CR>:term<CR>
+nnoremap <Leader>c :tab new<CR>:term<CR>
+inoremap <Leader>c <Esc>:tab new<CR>:term<CR>
+
+" Quickly create a new terminal in a vertical split
+tnoremap <Leader>% <C-\><C-n>:vsp<CR><C-w><C-w>:term<CR>
+nnoremap <Leader>% :vsp<CR><C-w><C-w>:term<CR>
+inoremap <Leader>% <Esc>:vsp<CR><C-w><C-w>:term<CR>
+
+" Quickly create a new terminal in a horizontal split
+tnoremap <Leader>" <C-\><C-n>:sp<CR><C-w><C-w>:term<CR>
+nnoremap <Leader>" :sp<CR><C-w><C-w>:term<CR>
+inoremap <Leader>" <Esc>:sp<CR><C-w><C-w>:term<CR>
 
 "*****************************************************************************
 "" Helpful commands
