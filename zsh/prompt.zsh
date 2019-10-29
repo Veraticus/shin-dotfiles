@@ -1,4 +1,5 @@
 export GEOMETRY_KUBE_CONTEXT_COLOR=242
+export GEOMETRY_KUBE_CONTEXT_PROD_COLOR=160
 
 josh_geometry_git() {
   (( $+commands[git] )) || return
@@ -44,6 +45,16 @@ josh_geometry_path() {
 
 }
 
+josh_geometry_kube_context() {
+  local kube_context="$(kubectl config current-context 2> /dev/null)"
+  if [[ "$kube_context" =~ 'prod' ]]; then
+    local color=$GEOMETRY_KUBE_CONTEXT_PROD_COLOR
+  else
+    local color=$GEOMETRY_KUBE_CONTEXT_COLOR
+  fi
+  ansi ${color} ${kube_context}
+}
+
 josh_geometry_kube() {
   (( $+commands[kubectl] )) || return
 
@@ -53,7 +64,7 @@ josh_geometry_kube() {
 
   local geometry_kube_details && geometry_kube_details=(
     $(geometry_kube_symbol)
-    $(geometry_kube_context)
+    $(josh_geometry_kube_context)
   )
 
   echo -n ${geometry_kube_details}
