@@ -1,3 +1,5 @@
+export GEOMETRY_KUBE_CONTEXT_COLOR=242
+
 josh_geometry_git() {
   (( $+commands[git] )) || return
 
@@ -42,8 +44,23 @@ josh_geometry_path() {
 
 }
 
+josh_geometry_kube() {
+  (( $+commands[kubectl] )) || return
+
+  ( ${GEOMETRY_KUBE_PIN:=true} ) || return
+
+  ( ${GEOMETRY_KUBE_PIN:=false} ) || [[ -n "$KUBECONFIG" ]] || [[ -n "$(kubectl config current-context 2> /dev/null)" ]] || return
+
+  local geometry_kube_details && geometry_kube_details=(
+    $(geometry_kube_symbol)
+    $(geometry_kube_context)
+  )
+
+  echo -n ${geometry_kube_details}
+}
+
 GEOMETRY_STATUS_SYMBOL="▶"
 GEOMETRY_STATUS_SYMBOL_ERROR="▷"
 GEOMETRY_PROMPT=(geometry_echo josh_geometry_path geometry_status)
-GEOMETRY_RPROMPT=(geometry_exec_time josh_geometry_git geometry_echo)
-GEOMETRY_INFO=(josh_geometry_ruby geometry_kube)
+GEOMETRY_RPROMPT=(geometry_exec_time josh_geometry_git geometry_echo josh_geometry_kube)
+GEOMETRY_INFO=()
