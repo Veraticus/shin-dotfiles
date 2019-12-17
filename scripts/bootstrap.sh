@@ -175,15 +175,28 @@ install_zplugin() {
   cd $DOTFILES
 }
 
+install_yamllint() {
+  if [ -f "${HOME}/.config/yamllint/config" ]; then
+    success "yamllint installed"
+  else
+    mkdir -p "${HOME}/.config/yamllint"
+    link_file "$DOTFILES_ROOT/yamllint/config.yaml" "${HOME}/.config/yamllint/config"
+  fi
+
+  cd $DOTFILES
+}
+
 install_dotfiles
 install_alacritty
 install_neovim
 install_tmux
 install_zplugin
+install_yamllint
 
 if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
   brew install exa rg bat nodejs fzf
   brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+  pip3 install yamllint
 fi
 
 echo ''
