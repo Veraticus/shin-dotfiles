@@ -1,0 +1,62 @@
+k9s:
+  # General K9s styles
+  body:
+    fgColor: #f8f8f2
+    bgColor: #282a36
+    logoColor: #8be9fd
+  # ClusterInfoView styles.
+  info:
+    fgColor: #f8f8f2
+    sectionColor: #6272a4
+  frame:
+    # Borders styles.
+    border:
+      fgColor: #f8f8f2
+      focusColor: #44475a
+    # MenuView attributes and styles.
+    menu:
+      fgColor: #f8f8f2
+      keyColor: #bd93f9
+      # Used for favorite namespaces
+      numKeyColor: #8be9fd
+    # CrumbView attributes for history navigation.
+    crumbs:
+      fgColor: white
+      bgColor: steelblue
+      activeColor: skyblue
+    # Resource status and update styles
+    status:
+      newColor: #00ff00
+      modifyColor: powderblue
+      addColor: lightskyblue
+      errorColor: indianred
+      highlightcolor: royalblue
+      killColor: slategray
+      completedColor: gray
+    # Border title styles.
+    title:
+      fgColor: aqua
+      bgColor: white
+      highlightColor: skyblue
+      counterColor: slateblue
+      filterColor: slategray
+  # TableView attributes.
+  table:
+    fgColor: blue
+    bgColor: darkblue
+    cursorColor: aqua
+    # Header row styles.
+    header:
+      fgColor: white
+      bgColor: darkblue
+      sorterColor: orange
+  views:
+    # YAML info styles.
+    yaml:
+      keyColor: steelblue
+      colonColor: blue
+      valueColor: royalblue
+    # Logs styles.
+    logs:
+      fgColor: white
+      bgColor: black

@@ -1,0 +1,5 @@
+ brew "exa"
+ brew "rg"
+ brew "bat"
+ brew "nodejs"
+ brew "fzf"

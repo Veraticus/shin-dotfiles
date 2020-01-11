@@ -186,17 +186,29 @@ install_yamllint() {
   cd $DOTFILES
 }
 
+install_k9s() {
+if [ -f "${HOME}/.k9s/config.yml" ]; then
+    success "k9s installed"
+  else
+    mkdir -p "${HOME}/.k9s"
+    link_file "$DOTFILES_ROOT/k9s/config.yml" "${HOME}/.k9s/config.yml"
+    link_file "$DOTFILES_ROOT/k9s/skin.yml" "${HOME}/.k9s/skin.yml"
+  fi
+
+  cd $DOTFILES
+}
+
 install_dotfiles
 install_alacritty
 install_neovim
 install_tmux
 install_zplugin
 install_yamllint
+install_k9s
 
 if [ "$(uname 2> /dev/null)" == "Darwin" ]; then
-  brew install exa rg bat nodejs fzf
-  brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-  pip3 install yamllint
+    brew bundle --file="$DOTFILES_ROOT/Brewfile"
+    pip3 install yamllint
 fi
 
 echo ''

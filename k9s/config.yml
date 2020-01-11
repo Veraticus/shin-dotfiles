@@ -1,0 +1,4 @@
+k9s:
+  refreshRate: 2
+  headless: false
+  fullScreenLogs: true
