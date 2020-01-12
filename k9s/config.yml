@@ -1,4 +1,7 @@
 k9s:
   refreshRate: 2
-  headless: false
+  headless: true
+  logBufferSize: 10000
+  logRequestSize: 1000
   fullScreenLogs: true
+
