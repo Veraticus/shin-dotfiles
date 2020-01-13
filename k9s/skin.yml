@@ -1,62 +1,73 @@
+foreground: &foreground "#f8f8f2"
+background: &background "#282a36"
+current_line: &current_line "#44475a"
+selection: &selection "#44475a"
+comment: &comment "#6272a4"
+cyan: &cyan "#8be9fd"
+green: &green "#50fa7b"
+orange: &orange "#ffb86c"
+pink: &pink "#ff79c6"
+purple: &purple "#bd93f9"
+red: &red "#ff5555"
+yellow: &yellow "#f1fa8c"
 k9s:
   # General K9s styles
   body:
-    fgColor: #f8f8f2
-    bgColor: #282a36
-    logoColor: #8be9fd
+    fgColor: *foreground
+    bgColor: *background
+    logoColor: *purple
   # ClusterInfoView styles.
   info:
-    fgColor: #f8f8f2
-    sectionColor: #6272a4
+    fgColor: *pink
+    sectionColor: *foreground
   frame:
     # Borders styles.
     border:
-      fgColor: #f8f8f2
-      focusColor: #44475a
-    # MenuView attributes and styles.
+      fgColor: *selection
+      focusColor: *current_line
     menu:
-      fgColor: #f8f8f2
-      keyColor: #bd93f9
+      fgColor: *foreground
+      keyColor: *pink
       # Used for favorite namespaces
-      numKeyColor: #8be9fd
+      numKeyColor: *pink
     # CrumbView attributes for history navigation.
     crumbs:
-      fgColor: white
-      bgColor: steelblue
-      activeColor: skyblue
+      fgColor: *foreground
+      bgColor: *current_line
+      activeColor: *current_line
     # Resource status and update styles
     status:
-      newColor: #00ff00
-      modifyColor: powderblue
-      addColor: lightskyblue
-      errorColor: indianred
-      highlightcolor: royalblue
-      killColor: slategray
-      completedColor: gray
+      newColor: *cyan
+      modifyColor: *purple
+      addColor: *green
+      errorColor: *red
+      highlightcolor: *orange
+      killColor: *comment
+      completedColor: *comment
     # Border title styles.
     title:
-      fgColor: aqua
-      bgColor: white
-      highlightColor: skyblue
-      counterColor: slateblue
-      filterColor: slategray
+      fgColor: *foreground
+      bgColor: *current_line
+      highlightColor: *orange
+      counterColor: *purple
+      filterColor: *pink
   # TableView attributes.
   table:
-    fgColor: blue
-    bgColor: darkblue
-    cursorColor: aqua
+    fgColor: *foreground
+    bgColor: *background
+    cursorColor: *current_line
     # Header row styles.
     header:
-      fgColor: white
-      bgColor: darkblue
-      sorterColor: orange
+      fgColor: *foreground
+      bgColor: *background
+      sorterColor: *cyan
   views:
     # YAML info styles.
     yaml:
-      keyColor: steelblue
-      colonColor: blue
-      valueColor: royalblue
+      keyColor: *pink
+      colonColor: *purple
+      valueColor: *foreground
     # Logs styles.
     logs:
-      fgColor: white
-      bgColor: black
+      fgColor: *foreground
+      bgColor: *background

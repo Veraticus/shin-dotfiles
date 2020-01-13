@@ -33,6 +33,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
@@ -60,6 +61,12 @@ call plug#end()
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -256,6 +263,10 @@ inoremap <C-h> <Esc><C-w>h
 inoremap <C-j> <Esc><C-w>j
 inoremap <C-k> <Esc><C-w>k
 inoremap <C-l> <Esc><C-w>l
+
+tnoremap <C-s> <Nop>
+noremap <C-s> <Nop>
+inoremap <C-s> <Nop>
 
 "*****************************************************************************
 "" Visual Settings
