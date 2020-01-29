@@ -48,6 +48,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mtth/scratch.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-repeat'
+Plug 'svermeulen/vim-cutlass'
+Plug 'svermeulen/vim-yoink'
+Plug 'svermeulen/vim-subversive'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
@@ -124,10 +131,55 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+
+"*****************************************************************************
+"" sneak
+"*****************************************************************************
+
+let g:sneak#label = 1
+
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+
+"*****************************************************************************
+"" cutlass
+"*****************************************************************************
+
+nnoremap m d
+xnoremap m d
+
+nnoremap mm dd
+nnoremap M D
+
+"*****************************************************************************
+"" yoink
+"*****************************************************************************
+
+nmap <c-d> <plug>(YoinkPostPasteSwapBack)
+nmap <c-f> <plug>(YoinkPostPasteSwapForward)
+
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
+
+nmap y <plug>(YoinkYankPreserveCursorPosition)
+xmap y <plug>(YoinkYankPreserveCursorPosition)
+
+let g:yoinkIncludeDeleteOperations = 1
+
+"*****************************************************************************
+"" subversive
+"*****************************************************************************
+
+" s for substitute
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
+
+nmap <leader>s <plug>(SubversiveSubstituteRange)
+xmap <leader>s <plug>(SubversiveSubstituteRange)
+
+nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
 "*****************************************************************************
 "" coc.nvim
@@ -209,9 +261,9 @@ xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <C-d> <Plug>(coc-range-select)
-xmap <silent> <C-d> <Plug>(coc-range-select)
+" Use <C-s> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -329,7 +381,9 @@ let g:ale_linters = {'ruby': ['ruby','solargraph'], 'terraform': ['terraform']}
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],'terraform': ['terraform']}
 let g:ale_fix_on_save = 1
 
-"" fzf
+"*****************************************************************************
+"" fzf Settings
+"*****************************************************************************
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_action = {
   \ 'ctrl-t': 'tab drop',
