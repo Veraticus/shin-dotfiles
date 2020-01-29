@@ -166,6 +166,9 @@ nmap y <plug>(YoinkYankPreserveCursorPosition)
 xmap y <plug>(YoinkYankPreserveCursorPosition)
 
 let g:yoinkIncludeDeleteOperations = 1
+let g:yoinkSavePersistently = 1
+
+set clipboard=unnamed
 
 "*****************************************************************************
 "" subversive
