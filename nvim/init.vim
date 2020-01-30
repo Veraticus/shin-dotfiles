@@ -55,6 +55,7 @@ Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
+Plug 'psliwka/vim-smoothie'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
