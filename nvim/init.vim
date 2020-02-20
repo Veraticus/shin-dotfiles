@@ -422,8 +422,7 @@ let g:tagbar_type_go = {
 \}
 
 "" fugitive
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gp :Gpull<CR>Gpush<CR>
+nnoremap <leader>g :Gstatus<CR>
 
 "" scratch
 let g:scratch_persistence_file = "~/.config/nvim/scratch"
