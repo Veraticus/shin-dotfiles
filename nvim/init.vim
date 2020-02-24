@@ -37,8 +37,6 @@ Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
-Plug 'Raimondi/delimitMate'
-Plug 'severin-lemaignan/vim-minimap'
 Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
@@ -46,7 +44,6 @@ Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'jiangmiao/auto-pairs'
 Plug 'mtth/scratch.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-unimpaired'
@@ -55,7 +52,7 @@ Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
-Plug 'psliwka/vim-smoothie'
+Plug 'junegunn/vim-peekaboo'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
@@ -69,12 +66,43 @@ call plug#end()
 "*****************************************************************************
 "" Basic Setup
 "*****************************************************************************
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+set termguicolors
+set ruler
+set number
 
+let no_buffers_menu=1
+
+set mousemodel=popup
+
+let g:CSApprox_loaded = 1
+
+" IndentLine
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 0
+let g:indentLine_char = '┆'
+let g:indentLine_faster = 1
+
+"" Disable the blinking cursor.
+set gcr=a:blinkon0
+set scrolloff=3
+
+"" Status bar
+set laststatus=2
+
+"" Fix gitgutter delays
+set updatetime=100
+let g:gitgutter_grep = 'rg'
+
+"" Use modeline overrides
+set modeline
+set modelines=10
+
+set title
+set titleold="Terminal"
+set titlestring=%F
+
+"" Encoding
+set tbidi
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
@@ -113,11 +141,11 @@ set inccommand=nosplit
 
 " session management
 let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
+let g:session_autoload = "yes"
+let g:session_autosave = "yes"
 let g:session_command_aliases = 1
 
-syntax on
+syntax enable
 color dracula
 
 " Better display for messages
@@ -134,29 +162,38 @@ set signcolumn=yes
 
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
-"*****************************************************************************
-"" sneak
-"*****************************************************************************
+" statusline
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
+let g:airline_theme = 'dracula'
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
+
+let g:ale_sign_column_always = 1
+let g:ale_linters = {'ruby': ['ruby','solargraph'], 'terraform': ['terraform']}
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],'terraform': ['terraform']}
+let g:ale_fix_on_save = 1
+
+" Why isn't nohighlight easier?
+nnoremap <leader>n :noh<CR>
+
+"" sneak
 let g:sneak#label = 1
 
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
 
-"*****************************************************************************
 "" cutlass
-"*****************************************************************************
+nnoremap x d
+xnoremap x d
 
-nnoremap m d
-xnoremap m d
+nnoremap xx dd
+nnoremap X D
 
-nnoremap mm dd
-nnoremap M D
-
-"*****************************************************************************
 "" yoink
-"*****************************************************************************
-
 nmap <c-d> <plug>(YoinkPostPasteSwapBack)
 nmap <c-f> <plug>(YoinkPostPasteSwapForward)
 
@@ -166,15 +203,15 @@ nmap P <plug>(YoinkPaste_P)
 nmap y <plug>(YoinkYankPreserveCursorPosition)
 xmap y <plug>(YoinkYankPreserveCursorPosition)
 
+nmap <c-=> <plug>(YoinkPostPasteToggleFormat)
+
 let g:yoinkIncludeDeleteOperations = 1
 let g:yoinkSavePersistently = 1
+let g:yoinkMoveCursorToEndOfPaste = 1
 
 set clipboard=unnamed
 
-"*****************************************************************************
 "" subversive
-"*****************************************************************************
-
 " s for substitute
 nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
@@ -185,10 +222,7 @@ xmap <leader>s <plug>(SubversiveSubstituteRange)
 
 nmap <leader>ss <plug>(SubversiveSubstituteWordRange)
 
-"*****************************************************************************
 "" coc.nvim
-"*****************************************************************************
-
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -280,9 +314,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 let g:airline#extensions#coc#enabled = 1
 
-"*****************************************************************************
-"" Terminal Setup
-"*****************************************************************************
+"" Terminal shortcuts
 tnoremap <Esc> <C-\><C-n>
 
 " Quickly create a new terminal in a new tab
@@ -300,9 +332,7 @@ tnoremap <Leader>" <C-\><C-n>:sp<CR><C-w><C-w>:term<CR>
 nnoremap <Leader>" :sp<CR><C-w><C-w>:term<CR>
 inoremap <Leader>" <Esc>:sp<CR><C-w><C-w>:term<CR>
 
-"*****************************************************************************
 "" Helpful commands
-"*****************************************************************************
 nnoremap  <silent> <Leader><tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 nnoremap  <silent> <Leader><s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 nnoremap  <Leader><Leader> <C-^>
@@ -324,70 +354,7 @@ tnoremap <C-s> <Nop>
 noremap <C-s> <Nop>
 inoremap <C-s> <Nop>
 
-"*****************************************************************************
-"" Visual Settings
-"*****************************************************************************
-syntax on
-set ruler
-set number
-
-let no_buffers_menu=1
-
-set mousemodel=popup
-set t_Co=256
-set guioptions=egmrti
-set gfn=Monospace\ 10
-
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
-    set transparency=7
-  endif
-else
-  let g:CSApprox_loaded = 1
-
-  " IndentLine
-  let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
-  let g:indentLine_faster = 1
-endif
-
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
-set scrolloff=3
-
-"" Status bar
-set laststatus=2
-
-"" Fix gitgutter delays
-set updatetime=100
-
-"" Use modeline overrides
-set modeline
-set modelines=10
-
-set title
-set titleold="Terminal"
-set titlestring=%F
-
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
-
-let g:airline_theme = 'dracula'
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline_skip_empty_sections = 1
-
-let g:ale_sign_column_always = 1
-let g:ale_linters = {'ruby': ['ruby','solargraph'], 'terraform': ['terraform']}
-let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],'terraform': ['terraform']}
-let g:ale_fix_on_save = 1
-
-"*****************************************************************************
-"" fzf Settings
-"*****************************************************************************
+"" fzf
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_action = {
   \ 'ctrl-t': 'tab drop',
@@ -395,7 +362,6 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 nmap <C-p> :Files<CR>
-nmap <Leader>f :GFiles<CR>
 nmap <Leader>H :Helptags!<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>h :History<CR>
@@ -408,16 +374,13 @@ nmap <Leader>/ :Rg<Space>
 nmap <Leader>C :Commands<CR>
 nmap <Leader>: :History:<CR>
 nmap <Leader>M :Maps<CR>
-nmap <Leader>s :Filetypes<CR>
 nmap <Leader>d :exe ':Rg ' . expand('<cword>')<CR>
 
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-"*****************************************************************************
-"" Plugin Settings
-"*****************************************************************************
-nmap <leader>t :TagbarToggle<CR>
+"" tagbar
+nmap <leader>t :TagbarOpenAutoClose<CR>
 
 " ruby
 let g:rubycomplete_buffer_loading = 1
@@ -436,9 +399,7 @@ augroup yaml
   autocmd FileType yaml set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
-"*****************************************************************************
 "" ctags
-"*****************************************************************************
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
         \ 'm:modules',
@@ -460,3 +421,9 @@ let g:tagbar_type_go = {
         \'c:const'
     \]
 \}
+
+"" fugitive
+nnoremap <leader>g :Gstatus<CR>
+
+"" scratch
+let g:scratch_persistence_file = "~/.config/nvim/scratch"
