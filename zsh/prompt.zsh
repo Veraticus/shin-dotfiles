@@ -17,7 +17,7 @@ josh_geometry_git() {
   )
 
   local separator=${GEOMETRY_GIT_SEPARATOR:-" :: "}
-  echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(pj.$separator.)geometry_git_details}
+  echo -n $(geometry_git_rebase) $(geometry_git_remote) $(geometry_git_branch) ${(pj.$separator.)geometry_git_details}
 }
 
 

@@ -129,6 +129,21 @@ install_alacritty () {
   cd $DOTFILES_ROOT
 }
 
+install_kitty () {
+  info 'installing kitty'
+
+  if [ -d "${HOME}/.config/kitty/" ]
+  then
+    success "kitty exists already"
+  else
+    mkdir -p "${HOME}/.config/kitty/"
+    link_file "$DOTFILES_ROOT/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
+    success "installed kitty"
+  fi
+
+  cd $DOTFILES_ROOT
+}
+
 install_neovim() {
   info 'installing neovim'
 
@@ -163,13 +178,13 @@ install_tmux() {
   cd $DOTFILES_ROOT
 }
 
-install_zplugin() {
-  if [ -d "${HOME}/.zplugin/bin" ]; then
-    success "zplugin installed"
+install_zinit() {
+  if [ -d "${HOME}/.zinit/bin" ]; then
+    success "zinit installed"
   else
-    mkdir ~/.zplugin
-    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
-    zsh -c "source ~/.zshrc && -zplg-scheduler burst && zplugin compile --all  || true "
+    mkdir ~/.zinit
+    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    zsh -c "source ~/.zshrc && -zplg-scheduler burst && zinit compile --all  || true "
   fi
 
   cd $DOTFILES
@@ -201,9 +216,10 @@ if [ -L "${HOME}/.k9s/config.yml" ]; then
 
 install_dotfiles
 install_alacritty
+install_kitty
 install_neovim
 install_tmux
-install_zplugin
+install_zinit
 install_yamllint
 install_k9s
 
