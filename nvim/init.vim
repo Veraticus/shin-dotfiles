@@ -53,6 +53,9 @@ Plug 'svermeulen/vim-cutlass'
 Plug 'svermeulen/vim-yoink'
 Plug 'svermeulen/vim-subversive'
 Plug 'junegunn/vim-peekaboo'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-line'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
