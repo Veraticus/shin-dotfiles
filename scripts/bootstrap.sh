@@ -129,6 +129,21 @@ install_alacritty () {
   cd $DOTFILES_ROOT
 }
 
+install_kitty () {
+  info 'installing kitty'
+
+  if [ -d "${HOME}/.config/kitty/" ]
+  then
+    success "kitty exists already"
+  else
+    mkdir -p "${HOME}/.config/kitty/"
+    link_file "$DOTFILES_ROOT/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
+    success "installed kitty"
+  fi
+
+  cd $DOTFILES_ROOT
+}
+
 install_neovim() {
   info 'installing neovim'
 
@@ -201,6 +216,7 @@ if [ -L "${HOME}/.k9s/config.yml" ]; then
 
 install_dotfiles
 install_alacritty
+install_kitty
 install_neovim
 install_tmux
 install_zplugin
