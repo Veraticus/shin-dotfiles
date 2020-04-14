@@ -178,13 +178,13 @@ install_tmux() {
   cd $DOTFILES_ROOT
 }
 
-install_zplugin() {
-  if [ -d "${HOME}/.zplugin/bin" ]; then
-    success "zplugin installed"
+install_zinit() {
+  if [ -d "${HOME}/.zinit/bin" ]; then
+    success "zinit installed"
   else
-    mkdir ~/.zplugin
-    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
-    zsh -c "source ~/.zshrc && -zplg-scheduler burst && zplugin compile --all  || true "
+    mkdir ~/.zinit
+    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    zsh -c "source ~/.zshrc && -zplg-scheduler burst && zinit compile --all  || true "
   fi
 
   cd $DOTFILES
@@ -219,7 +219,7 @@ install_alacritty
 install_kitty
 install_neovim
 install_tmux
-install_zplugin
+install_zinit
 install_yamllint
 install_k9s
 

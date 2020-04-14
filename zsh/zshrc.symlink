@@ -25,36 +25,35 @@ done
 
 unset config_files
 
-# zplugin
-. ~/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+# zinit
+. ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-zplugin ice wait"0b" lucid blockf atpull'zplugin creinstall -q .'
-zplugin light zsh-users/zsh-completions
+zinit ice wait"0b" lucid blockf atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
 
-zplugin ice silent wait"1" lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zplugin light zdharma/fast-syntax-highlighting
+zinit ice silent wait"1" lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zinit light zdharma/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-zplugin ice wait"0a" lucid atload"_zsh_autosuggest_start"
-zplugin light zsh-users/zsh-autosuggestions
+zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
 zstyle ":history-search-multi-word" page-size "11"
-zplugin ice wait"1" lucid
-zplugin load zdharma/history-search-multi-word
+zinit ice wait"1" lucid
+zinit load zdharma/history-search-multi-word
 
-zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
     atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zplugin light trapd00r/LS_COLORS
+zinit light trapd00r/LS_COLORS
 
-zplugin light geometry-zsh/geometry
+zinit light geometry-zsh/geometry
 
 # Start tmux
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux new-session -A -D -s main
 fi
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
