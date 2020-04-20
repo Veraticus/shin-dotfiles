@@ -134,11 +134,20 @@ install_kitty () {
 
   if [ -f "${HOME}/.config/kitty/kitty.conf" ]
   then
-    success "kitty exists already"
+    success "kitty config exists already"
   else
     mkdir -p "${HOME}/.config/kitty/"
     link_file "$DOTFILES_ROOT/kitty/kitty.conf" "${HOME}/.config/kitty/kitty.conf"
-    success "installed kitty"
+    success "installed kitty config"
+  fi
+
+  if [ -f "${HOME}/.terminfo/x/xterm-kitty" ]
+  then
+    success "kitty terminfo exists already"
+  else
+    mkdir -p "${HOME}/.terminfo/x"
+    link_file "$DOTFILES_ROOT/kitty/terminfo" "${HOME}/.terminfo/x/xterm-kitty"
+    success "installed kitty terminfo"
   fi
 
   cd $DOTFILES_ROOT
