@@ -132,7 +132,7 @@ install_alacritty () {
 install_kitty () {
   info 'installing kitty'
 
-  if [ -d "${HOME}/.config/kitty/" ]
+  if [ -f "${HOME}/.config/kitty/kitty.conf" ]
   then
     success "kitty exists already"
   else
