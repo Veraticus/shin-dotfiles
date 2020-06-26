@@ -56,6 +56,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
+Plug 'junegunn/vim-easy-align'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
@@ -430,3 +431,10 @@ nnoremap <leader>g :Gstatus<CR>
 
 "" scratch
 let g:scratch_persistence_file = "~/.config/nvim/scratch"
+
+"" easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
