@@ -141,12 +141,21 @@ install_kitty () {
     success "installed kitty config"
   fi
 
-  if [ -f "/usr/share/terminfo/x/xterm-kitty" ]
+    if [ -f "${HOME}/.terminfo/x/xterm-kitty" ]
   then
-    success "kitty terminfo exists already"
+    success "kitty local terminfo exists already"
   else
     mkdir -p "${HOME}/.terminfo/x"
-    link_file "$DOTFILES_ROOT/kitty/terminfo" "/usr/share/terminfo/x/xterm-kitty"
+    link_file "$DOTFILES_ROOT/kitty/terminfo" "${HOME}/.terminfo/x/xterm-kitty"
+    success "installed kitty terminfo"
+  fi
+
+  if [ -f "/usr/share/terminfo/x/xterm-kitty" ]
+  then
+    success "kitty shared terminfo exists already"
+  else
+    mkdir -p "/usr/share/terminfo/x" || true
+    sudo ln -s "$DOTFILES_ROOT/kitty/terminfo" "/usr/share/terminfo/x/xterm-kitty" || true
     success "installed kitty terminfo"
   fi
 
