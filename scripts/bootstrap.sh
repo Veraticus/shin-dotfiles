@@ -210,6 +210,13 @@ install_tmux() {
     link_file "$DOTFILES_ROOT/tmux/tmux.conf" "${HOME}/.tmux.conf"
   fi
 
+  if [ -f "${HOME}/.tmux.conf.local" ]
+  then
+    success "tmux conf local installed"
+  else
+    link_file "$DOTFILES_ROOT/tmux/tmux.conf.local" "${HOME}/.tmux.conf.local"
+  fi
+
   cd $DOTFILES_ROOT
 }
 
