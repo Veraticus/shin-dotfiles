@@ -179,6 +179,23 @@ install_neovim() {
   else
     link_file "$DOTFILES_ROOT/nvim/coc-settings.json" "$HOME/.config/nvim"
   fi
+  if [ -f "/etc/os-release" ] && grep -q "Ubuntu" "/etc/os-release"
+  then
+    if [ -f "$HOME/bin/nvim" ]
+    then
+      success "neovim installed"
+    else
+      cd /tmp
+      curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+      chmod 0755 nvim.appimage
+      mkdir -p "$HOME/bin"
+      mv nvim.appimage "$HOME/bin/nvim"
+      cd $HOME
+      success "installed neovim"
+    fi
+  else
+    success "Not updating neovim"
+  fi
 
   cd $DOTFILES_ROOT
 }
