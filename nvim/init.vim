@@ -125,6 +125,9 @@ set expandtab
 "" Map leader to ,
 let mapleader=','
 
+"" Map localleader to space
+let maplocalleader="\<space>"
+
 "" Enable hidden buffers
 set hidden
 
