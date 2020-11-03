@@ -431,12 +431,6 @@ augroup vimrc-ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
 augroup END
 
-augroup yaml
-  autocmd!
-  autocmd BufNewFile,BufRead *.yaml,*.yml setlocal filetype=yaml
-  autocmd FileType yaml set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2 smartindent
-augroup END
-
 "" ctags
 let g:tagbar_type_ruby = {
     \ 'kinds' : [
@@ -472,3 +466,6 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" Delete a buffer without altering layout
+nnoremap <C-c> :bp\|bd #<CR>
