@@ -47,7 +47,7 @@ josh_geometry_path() {
 
 josh_geometry_kube_context() {
   local kube_context="$(kubectl config current-context 2> /dev/null)"
-  if [[ "$kube_context" =~ 'prod' ]]; then
+  if (! [[ "$kube_context" =~ 'nonprod' ]] ) && [[ "$kube_context" =~ 'prod' ]]; then
     local color=$GEOMETRY_KUBE_CONTEXT_PROD_COLOR
   else
     local color=$GEOMETRY_KUBE_CONTEXT_COLOR
