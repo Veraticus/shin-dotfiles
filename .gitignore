@@ -1,1 +1,2 @@
-k9s/config.yml
+# Ignore nvim plugs
+nvim/.config/nvim/plugged/

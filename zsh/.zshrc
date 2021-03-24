@@ -1,5 +1,5 @@
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+export ZSH=$HOME/.zsh
 
 # all of our zsh files
 typeset -U config_files

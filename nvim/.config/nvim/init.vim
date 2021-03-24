@@ -41,8 +41,6 @@ Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'majutsushi/tagbar'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 Plug 'mtth/scratch.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-unimpaired'
@@ -57,6 +55,9 @@ Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-line'
 Plug 'junegunn/vim-easy-align'
 Plug 'sheerun/vim-polyglot'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Add language-specific plugins
 Plug 'hashivim/vim-terraform'
@@ -122,8 +123,8 @@ set softtabstop=0
 set shiftwidth=4
 set expandtab
 
-"" Map leader to ,
-let mapleader=','
+"" Map leader to space
+let mapleader=' '
 
 "" Map localleader to space
 let maplocalleader="\<space>"
@@ -392,30 +393,11 @@ tnoremap <C-s> <Nop>
 noremap <C-s> <Nop>
 inoremap <C-s> <Nop>
 
-"" fzf
-let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab drop',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-nmap <C-p> :Files<CR>
-nmap <Leader>H :Helptags!<CR>
-nmap <Leader>b :Buffers<CR>
-nmap <Leader>h :History<CR>
-nmap <Leader>t :BTags<CR>
-nmap <Leader>T :Tags<CR>
-nmap <Leader>l :BLines<CR>
-nmap <Leader>L :Lines<CR>
-nmap <Leader>' :Marks<CR>
-nmap <Leader>/ :Rg<Space>
-nmap <Leader>C :Commands<CR>
-nmap <Leader>: :History:<CR>
-nmap <Leader>M :Maps<CR>
-nmap <Leader>d :exe ':Rg ' . expand('<cword>')<CR>
-
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+"" telescope
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 "" tagbar
 nmap <leader>t :TagbarOpenAutoClose<CR>

@@ -3,3 +3,4 @@
  brew "bat"
  brew "nodejs"
  brew "fzf"
+ brew "stow"
