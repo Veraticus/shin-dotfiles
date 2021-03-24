@@ -1,3 +1,4 @@
 # Ignore nvim plugs
 nvim/.config/nvim/plugged/*
+nvim/.config/nvim/plugin/*
 nvim/.config/nvim/autoload/*
