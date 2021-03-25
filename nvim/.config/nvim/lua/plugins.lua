@@ -24,17 +24,15 @@ return require('packer').startup(function()
     -- Some better window control
     use {'mhinz/vim-sayonara', cmd = 'Sayonara'}
 
-    -- Indent
-    use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
-
     -- File finding
     use {
         'nvim-telescope/telescope.nvim',
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
 
-    -- Terminal
-    use {'voldikss/vim-floaterm'}
+    -- File browsing
+    use {'justinmk/vim-dirvish'}
+    use {'kristijanhusak/vim-dirvish-git'}
 
     -- Project Management/Sessions
     use {
@@ -69,7 +67,11 @@ return require('packer').startup(function()
     use {'nvim-lua/lsp-status.nvim'}
     use {'onsails/lspkind-nvim'}
     use {'glepnir/lspsaga.nvim'}
+    use {'kosayoda/nvim-lightbulb'}
+    use {'kabouzeid/nvim-lspinstall'}
     use {'hrsh7th/nvim-compe'}
+    use {'hrsh7th/vim-vsnip'}
+    use {'hrsh7th/vim-vsnip-integ'}
 
     -- Format
     use {'andrejlevkovitch/vim-lua-format'}
@@ -86,9 +88,11 @@ return require('packer').startup(function()
         },
         run = ':TSUpdate'
     }
-    use {
-        'romgrk/nvim-treesitter-context',
-        requires = {'nvim-treesitter/nvim-treesitter'}
-    }
+
+    -- Indent
+    use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+
+    -- Terminal
+    use {'voldikss/vim-floaterm'}
 
 end)

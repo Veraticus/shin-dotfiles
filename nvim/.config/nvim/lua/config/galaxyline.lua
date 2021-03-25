@@ -1,3 +1,5 @@
+-- Based on: https://github.com/wren/dotfiles/blob/main/config/nvim/lua/plugins/galaxyline.lua
+--
 local gl = require('galaxyline')
 local gls = gl.section
 local fileinfo = require('galaxyline.provider_fileinfo')
@@ -33,7 +35,7 @@ local function filename_with_color()
     if modified then fg = colors.orange end
     vim.api.nvim_command('hi GalaxyFileName guifg=' .. fg .. ' guibg=' .. bg)
     local filename = fileinfo.get_current_file_name()
-    if is_help then filename = 'HELP - ' .. fn.expand('%:t:r') end
+    if is_help then filename = 'HELP - ' .. vim.fn.expand('%:t:r') end
     filename = ' ' .. filename
     return filename
 end
@@ -48,7 +50,7 @@ local function inactive_filename_with_color()
     vim.api.nvim_command(
         'hi GalaxyInactiveFileName guifg=' .. fg .. ' guibg=' .. bg)
     local filename = fileinfo.get_current_file_name()
-    if is_help then filename = 'HELP - ' .. fn.expand('%:t:r') end
+    if is_help then filename = 'HELP - ' .. vim.fn.expand('%:t:r') end
     filename = ' ' .. filename
     return filename
 end
