@@ -18,8 +18,8 @@ g.node_host_prog = '/usr/local/bin/node'
 
 -- Disable some built-in plugins we don't want
 local disabled_built_ins = {
-  'gzip', 'man', 'matchit', 'matchparen', 'shada_plugin', 'tarPlugin', 'tar', 'zipPlugin', 'zip',
-  'netrwPlugin'
+    'gzip', 'man', 'matchit', 'matchparen', 'shada_plugin', 'tarPlugin', 'tar', 'zipPlugin', 'zip',
+    'netrwPlugin'
 }
 for i = 1, 10 do g['loaded_' .. disabled_built_ins[i]] = 1 end
 

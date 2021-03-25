@@ -1,8 +1,12 @@
 require('plugins')
 require('settings')
 require('maps')
+require('autocmds')
 
 require('config.telescope')
 require('config.compe')
 require('config.floaterm')
 require('config.indent-blankline')
+require('config.sayonara')
+require('config.lsp')
+require('config.galaxyline')

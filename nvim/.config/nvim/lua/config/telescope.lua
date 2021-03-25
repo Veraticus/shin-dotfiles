@@ -2,6 +2,7 @@ local utils = require('utils')
 local opt = utils.opt
 local autocmd = utils.autocmd
 local map = utils.map
+local icons = require('nvim-nonicons')
 
 map('n', '<C-f>', [[<cmd>lua require('telescope.builtin').find_files{find_command={"rg", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--files", "--hidden", "--follow", "-g", "!.git/*"}}<cr>]])
 map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
@@ -23,7 +24,7 @@ require('telescope').setup{
       "!.git/*"
     },
     prompt_position = "bottom",
-    prompt_prefix = "▶ ",
+    prompt_prefix = "  " .. icons.get("telescope") .. "  ",
     selection_caret = "▶ ",
     entry_prefix = "  ",
     initial_mode = "insert",
