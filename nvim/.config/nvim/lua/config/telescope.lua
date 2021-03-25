@@ -4,9 +4,13 @@ local autocmd = utils.autocmd
 local map = utils.map
 local icons = require('nvim-nonicons')
 
+function input_grep()
+    string = vim.fn.input("rg/")
+    require('telescope.builtin').grep_string({search = string})
+end
 map('n', '<C-f>',
     [[<cmd>lua require('telescope.builtin').find_files{find_command={"rg", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--files", "--hidden", "--follow", "-g", "!.git/*"}}<cr>]])
-map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
+map('n', '<leader>fg', [[<cmd>lua input_grep()<cr>]])
 map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<cr>]])
 
 require('telescope').setup {
@@ -48,3 +52,5 @@ require('telescope').setup {
         buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
     }
 }
+
+require('telescope').load_extension('fzy_native')

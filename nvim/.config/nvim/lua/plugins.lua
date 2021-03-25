@@ -13,6 +13,10 @@ return require('packer').startup(function()
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
+    -- Helpers
+    use {'nvim-lua/popup.nvim'}
+    use {'nvim-lua/plenary.nvim'}
+
     -- Themes
     use {'dracula/vim', as = 'dracula'}
     use {'challenger-deep-theme/vim', as = 'challenger-deep'}
@@ -25,10 +29,9 @@ return require('packer').startup(function()
     use {'mhinz/vim-sayonara', cmd = 'Sayonara'}
 
     -- File finding
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-    }
+    use {'nvim-telescope/telescope.nvim'}
+
+    use {'nvim-telescope/telescope-fzy-native.nvim'}
 
     -- File browsing
     use {'justinmk/vim-dirvish'}
