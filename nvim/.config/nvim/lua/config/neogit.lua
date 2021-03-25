@@ -1,3 +1,7 @@
+local neogit = require('neogit')
+
+neogit.setup {}
+
 local utils = require('utils')
 local map = utils.map
 

@@ -89,6 +89,9 @@ return require('packer').startup(function()
         run = ':TSUpdate'
     }
 
+    -- Tpope
+    use {'tpope/vim-commentary'}
+
     -- Indent
     use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
 

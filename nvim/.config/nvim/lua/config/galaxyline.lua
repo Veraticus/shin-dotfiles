@@ -34,7 +34,7 @@ local function filename_with_color()
     local bg = colors.bg
     if modified then fg = colors.orange end
     vim.api.nvim_command('hi GalaxyFileName guifg=' .. fg .. ' guibg=' .. bg)
-    local filename = fileinfo.get_current_file_name()
+    local filename = vim.fn.expand('%:f')
     if is_help then filename = 'HELP - ' .. vim.fn.expand('%:t:r') end
     filename = ' ' .. filename
     return filename
@@ -49,7 +49,7 @@ local function inactive_filename_with_color()
     if modified then fg = colors.orange end
     vim.api.nvim_command(
         'hi GalaxyInactiveFileName guifg=' .. fg .. ' guibg=' .. bg)
-    local filename = fileinfo.get_current_file_name()
+    local filename = vim.fn.expand('%:f')
     if is_help then filename = 'HELP - ' .. vim.fn.expand('%:t:r') end
     filename = ' ' .. filename
     return filename

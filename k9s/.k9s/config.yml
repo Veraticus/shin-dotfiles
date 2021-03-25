@@ -13,10 +13,10 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: atlas-production
-  currentCluster: arn:aws:eks:us-west-2:504784758733:cluster/atlas
+  currentContext: nonprod.liveworld.com
+  currentCluster: nonprod.liveworld.com
   clusters:
-    arn:aws:eks:us-west-2:504784758733:cluster/atlas:
+    nonprod.liveworld.com:
       namespace:
         active: ""
         favorites:
