@@ -153,6 +153,7 @@ gls.left = {
         FileName = {
             provider = filename_with_color,
             condition = buffer_not_empty,
+            highlight = {fileinfo.get_file_icon_color, colors.bg},
             separator = '',
             separator_highlight = {colors.bg, colors.line_bg}
         }
@@ -252,7 +253,8 @@ gls.short_line_left = {
     }, {
         InactiveFileName = {
             provider = inactive_filename_with_color,
-            condition = buffer_not_empty
+            condition = buffer_not_empty,
+            highlight = {fileinfo.get_file_icon_color, colors.line_bg}
         }
     }, {
         Space5 = {

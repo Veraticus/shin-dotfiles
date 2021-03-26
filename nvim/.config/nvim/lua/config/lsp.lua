@@ -52,42 +52,41 @@ local function make_on_attach(config)
 
         lsp_status.on_attach(client)
         local opts = {noremap = true, silent = true}
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gD',
-                                    '<cmd>lua vim.lsp.buf.declaration()<CR>',
+        vim.api.nvim_buf_set_keymap(0, 'n', 'gh',
+                                    [[<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]],
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', 'gd',
-                                    '<cmd>lua vim.lsp.buf.definition()<CR>',
+                                    [[<cmd>lua require'lspsaga.provider'.preview_definition()<CR>]],
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', 'K',
-                                    '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+                                    [[<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>]],
+                                    opts)
         vim.api.nvim_buf_set_keymap(0, 'n', 'gi',
                                     '<cmd>lua vim.lsp.buf.implementation()<CR>',
                                     opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', '<c-s>',
-                                    '<cmd>lua vim.lsp.buf.signature_help()<CR>',
+        vim.api.nvim_buf_set_keymap(0, 'n', 'gs',
+                                    [[<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>]],
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', 'gTD',
                                     '<cmd>lua vim.lsp.buf.type_definition()<CR>',
                                     opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', '<leader>rn',
-                                    '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
         vim.api.nvim_buf_set_keymap(0, 'n', 'gr',
-                                    '<cmd>lua vim.lsp.buf.references()<CR>',
+                                    [[<cmd>lua require('lspsaga.rename').rename()<CR>]],
                                     opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gA',
-                                    '<cmd>lua vim.lsp.buf.code_action()<CR>',
+        vim.api.nvim_buf_set_keymap(0, 'n', 'ca',
+                                    [[<cmd>lua require('lspsaga.codeaction').code_action()<CR>]],
                                     opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', '<leader>e',
-                                    '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+        vim.api.nvim_buf_set_keymap(0, 'n', 'cd',
+                                    [[<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()]],
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', '<leader>E',
                                     '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>',
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', ']e',
-                                    '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>',
+                                    [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>]],
                                     opts)
         vim.api.nvim_buf_set_keymap(0, 'n', '[e',
-                                    '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>',
+                                    [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>]],
                                     opts)
 
         if client.resolved_capabilities.document_formatting or
@@ -106,7 +105,7 @@ local function make_on_attach(config)
             vim.api.nvim_command(
                 'au CursorHold <buffer> lua vim.lsp.buf.document_highlight()')
             vim.api.nvim_command(
-                'au CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()')
+                [[au CursorHold <buffer> lua require'lspsaga.diagnostic'.show_line_diagnostics()]])
             vim.api.nvim_command(
                 'au CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
             vim.api.nvim_command('augroup END')
@@ -122,6 +121,7 @@ local servers = {
         filetypes = {"css", "scss", "less", "sass"},
         root_dir = lspconfig.util.root_pattern("package.json", ".git")
     },
+    dockerls = {},
     gopls = {},
     html = {},
     rust_analyzer = {},
@@ -144,7 +144,7 @@ local servers = {
             }
         }
     },
-    terraformls = {},
+    terraformls = {filetypes = {"tf", "terraform", "hcl"}},
     vimls = {},
     yamlls = {}
 }
