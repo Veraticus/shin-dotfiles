@@ -12,3 +12,7 @@ map('n', '<c-l>', '<c-w>l')
 
 -- No highlights!
 map('n', '<leader>n', '<cmd>noh<cr>')
+
+-- Reload the LSP
+map('n', '<leader>l',
+    [[<cmd>lua vim.lsp.stop_client(vim.lsp.get_active_clients())<cr>]])
