@@ -62,7 +62,6 @@ return require('packer').startup(function()
     }
 
     -- Statusline
-    -- use {'glepnir/galaxyline.nvim', branch = 'main'}
     use {'hoob3rt/lualine.nvim'}
 
     -- LSP, Autocomplete, Hinting
@@ -106,5 +105,8 @@ return require('packer').startup(function()
 
     -- Shortcuts
     use {'folke/which-key.nvim'}
+
+    -- Bufferline
+    use {'akinsho/nvim-bufferline.lua'}
 
 end)
