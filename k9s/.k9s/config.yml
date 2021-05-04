@@ -13,10 +13,10 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: nonprod.liveworld.com
-  currentCluster: nonprod.liveworld.com
+  currentContext: teleport.atlasoffice.io-6abf56c8-adec-4434-be4d-3f83c98b5eab
+  currentCluster: teleport.atlasoffice.io
   clusters:
-    nonprod.liveworld.com:
+    arn:aws:eks:us-west-2:602864681186:cluster/atlas:
       namespace:
         active: ""
         favorites:
@@ -24,6 +24,23 @@ k9s:
         - default
       view:
         active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlasoffice.io:
+      namespace:
+        active: ""
+        favorites:
+        - all
+        - default
+      view:
+        active: ctx
       featureGates:
         nodeShell: false
       shellPod:

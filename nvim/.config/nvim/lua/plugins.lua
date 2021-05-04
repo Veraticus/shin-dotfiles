@@ -19,8 +19,7 @@ return require('packer').startup(function()
     use {'nacro90/numb.nvim'}
 
     -- Themes
-    use {'dracula/vim', as = 'dracula'}
-    use {'challenger-deep-theme/vim', as = 'challenger-deep'}
+    use {'folke/tokyonight.nvim'}
 
     -- Fonts
     use {'kyazdani42/nvim-web-devicons'}
@@ -31,7 +30,6 @@ return require('packer').startup(function()
 
     -- File finding
     use {'nvim-telescope/telescope.nvim'}
-
     use {'nvim-telescope/telescope-fzy-native.nvim'}
 
     -- File browsing
@@ -64,7 +62,8 @@ return require('packer').startup(function()
     }
 
     -- Statusline
-    use {'glepnir/galaxyline.nvim', branch = 'main'}
+    -- use {'glepnir/galaxyline.nvim', branch = 'main'}
+    use {'hoob3rt/lualine.nvim'}
 
     -- LSP, Autocomplete, Hinting
     use {'neovim/nvim-lspconfig'}
@@ -104,5 +103,8 @@ return require('packer').startup(function()
 
     -- Terminal
     use {'voldikss/vim-floaterm'}
+
+    -- Shortcuts
+    use {'folke/which-key.nvim'}
 
 end)

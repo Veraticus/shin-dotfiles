@@ -61,6 +61,7 @@ opt('signcolumn', 'yes:1', window)
 opt('ruler', true)
 opt('number', true)
 opt('clipboard', 'unnamedplus')
+opt('timeoutlen', 500)
 wo.colorcolumn = "99999"
 
 vim.cmd('set nobackup')
@@ -69,4 +70,4 @@ vim.cmd('set noundofile')
 
 -- Colorscheme
 opt('termguicolors', true)
-cmd [[colorscheme dracula]]
+cmd [[colorscheme tokyonight]]

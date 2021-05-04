@@ -52,9 +52,4 @@ zinit light trapd00r/LS_COLORS
 
 zinit light geometry-zsh/geometry
 
-# Start tmux
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-  exec tmux new-session -A -D -s main
-fi
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
