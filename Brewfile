@@ -4,3 +4,4 @@
  brew "nodejs"
  brew "fzf"
  brew "stow"
+ brew "tflint"

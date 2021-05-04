@@ -16,6 +16,7 @@ return require('packer').startup(function()
     -- Helpers
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
+    use {'nacro90/numb.nvim'}
 
     -- Themes
     use {'dracula/vim', as = 'dracula'}
@@ -75,9 +76,12 @@ return require('packer').startup(function()
     use {'hrsh7th/nvim-compe'}
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
+    use {'ray-x/lsp_signature.nvim'}
 
     -- Format
     use {'andrejlevkovitch/vim-lua-format'}
+    use {'Raimondi/delimitMate'}
+    use {'cappyzawa/trim.nvim'}
 
     -- Color picking
     use {'rrethy/vim-hexokinase', run = 'make hexokinase'}

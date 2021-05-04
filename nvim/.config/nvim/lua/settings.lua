@@ -42,7 +42,6 @@ opt('shiftwidth', 2, buffer)
 opt('expandtab', true)
 opt('backspace', 'indent,eol,start')
 opt('number', true, window)
-opt('smartindent', true, buffer)
 opt('laststatus', 2)
 opt('shada', [['20,<50,s10,h,/100]])
 opt('hidden', true)
@@ -63,6 +62,10 @@ opt('ruler', true)
 opt('number', true)
 opt('clipboard', 'unnamedplus')
 wo.colorcolumn = "99999"
+
+vim.cmd('set nobackup')
+vim.cmd('set noswapfile')
+vim.cmd('set noundofile')
 
 -- Colorscheme
 opt('termguicolors', true)

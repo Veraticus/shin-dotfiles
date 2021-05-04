@@ -183,3 +183,6 @@
 	textconv = sops -d
 [pull]
 	rebase = true
+[credential]
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true

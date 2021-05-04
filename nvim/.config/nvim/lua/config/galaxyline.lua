@@ -44,14 +44,14 @@ local function inactive_filename_with_color()
     local is_help = vim.bo.filetype == 'help'
     local modified = vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(),
                                                  'modified')
-    local fg = colors.comment
+    local fg = colors.cyan
     local bg = colors.line_bg
     if modified then fg = colors.orange end
     vim.api.nvim_command(
         'hi GalaxyInactiveFileName guifg=' .. fg .. ' guibg=' .. bg)
     local filename = vim.fn.expand('%:f')
     if is_help then filename = 'HELP - ' .. vim.fn.expand('%:t:r') end
-    filename = ' ' .. filename
+    filename = ' ' .. filename .. ' '
     return filename
 end
 
@@ -106,14 +106,6 @@ end
 local function buffer_is_modifiable() return vim.bo.modifiable end
 
 local function buffer_is_not_modifiable() return not buffer_is_modifiable() end
-
-local non_mod_spacer = {
-    NonMod = {
-        provider = function() return '    ' end,
-        highlight = {colors.line_bg, colors.line_bg},
-        condition = buffer_is_not_modifiable
-    }
-}
 
 ---------------
 -- Left side --

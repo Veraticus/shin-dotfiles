@@ -2,11 +2,14 @@ local lspconfig = require('lspconfig')
 local lsp_status = require('lsp-status')
 local lspkind = require('lspkind')
 
-local sign_define = vim.fn.sign_define
-sign_define('LspDiagnosticsSignError', {text = '', numhl = 'RedSign'})
-sign_define('LspDiagnosticsSignWarning', {text = '', numhl = 'YellowSign'})
-sign_define('LspDiagnosticsSignInformation', {text = '', numhl = 'WhiteSign'})
-sign_define('LspDiagnosticsSignHint', {text = '', numhl = 'BlueSign'})
+vim.fn.sign_define("LspDiagnosticsSignError",
+                   {text = "", numhl = "LspDiagnosticsDefaultError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+                   {text = "", numhl = "LspDiagnosticsDefaultWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+                   {text = "", numhl = "LspDiagnosticsDefaultInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint",
+                   {text = "", numhl = "LspDiagnosticsDefaultHint"})
 
 local texlab_search_status = vim.tbl_add_reverse_lookup {
     Success = 0,
@@ -40,7 +43,7 @@ lsp_status.register_progress()
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = false,
+        virtual_text = {spacing = 2, severity_limit = "Warning"},
         signs = true,
         update_in_insert = false,
         underline = true
@@ -51,6 +54,7 @@ local function make_on_attach(config)
         if config.before then config.before(client) end
 
         lsp_status.on_attach(client)
+        require'lsp_signature'.on_attach()
         local opts = {noremap = true, silent = true}
         vim.api.nvim_buf_set_keymap(0, 'n', 'gh',
                                     [[<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]],
@@ -144,7 +148,7 @@ local servers = {
             }
         }
     },
-    terraformls = {filetypes = {"tf", "terraform", "hcl"}},
+    tflint = {filetypes = {"tf", "terraform", "hcl"}},
     vimls = {},
     yamlls = {}
 }
