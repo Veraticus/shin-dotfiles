@@ -10,16 +10,6 @@ require'nvim-treesitter.configs'.setup {
         persist_queries = false -- Whether the query persists across vim sessions
     },
     autotag = {enable = true},
-    rainbow = {enable = true}
-    -- refactor = {highlight_definitions = {enable = true}}
-}
-
-local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
-parser_config.terraform = {
-    install_info = {
-        url = "~/.dotfiles/parsers/tree-sitter-terraform/",
-        files = {"src/parser.c"}
-    },
-    filetype = "terraform", -- if filetype does not agrees with parser name
-    used_by = {"tf", "hcl"} -- additional filetypes that use this parser
+    rainbow = {enable = true},
+    refactor = {highlight_definitions = {enable = true}}
 }

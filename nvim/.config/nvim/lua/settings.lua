@@ -70,4 +70,4 @@ vim.cmd('set noundofile')
 
 -- Colorscheme
 opt('termguicolors', true)
-cmd [[colorscheme tokyonight]]
+cmd [[colorscheme dracula_pro]]

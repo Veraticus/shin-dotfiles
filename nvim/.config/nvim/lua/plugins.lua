@@ -19,7 +19,7 @@ return require('packer').startup(function()
     use {'nacro90/numb.nvim'}
 
     -- Themes
-    use {'folke/tokyonight.nvim'}
+    use {'git@github.com:Veraticus/dracula_pro.nvim'}
 
     -- Fonts
     use {'kyazdani42/nvim-web-devicons'}
