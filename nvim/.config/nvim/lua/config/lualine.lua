@@ -54,7 +54,7 @@ require('lualine').setup {
     sections = {
         lualine_a = {{'mode', upper = true}},
         lualine_b = {{'branch', icon = ''}},
-        lualine_c = {{'filename', file_status = true, full_path = true}},
+        lualine_c = {{'filename', file_status = true, path = 1}},
         lualine_x = {'encoding', 'fileformat', 'filetype'},
         lualine_y = {
             {
@@ -67,7 +67,7 @@ require('lualine').setup {
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = {{'filename', file_status = true, full_path = true}},
+        lualine_c = {{'filename', file_status = true, path = 1}},
         lualine_x = {'location'},
         lualine_y = {},
         lualine_z = {}

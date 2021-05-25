@@ -14,6 +14,14 @@ map('n', '<leader>fg', [[<cmd>lua input_grep()<cr>]])
 map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<cr>]])
 
 require('telescope').setup {
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case"
+        }
+    },
     defaults = {
         vimgrep_arguments = {
             'rg', '--color=never', '--no-heading', '--with-filename',
@@ -53,4 +61,4 @@ require('telescope').setup {
     }
 }
 
-require('telescope').load_extension('fzy_native')
+require('telescope').load_extension('fzf')

@@ -16,7 +16,6 @@ return require('packer').startup(function()
     -- Helpers
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
-    use {'nacro90/numb.nvim'}
 
     -- Themes
     use {'git@github.com:Veraticus/dracula_pro.nvim'}
@@ -30,7 +29,7 @@ return require('packer').startup(function()
 
     -- File finding
     use {'nvim-telescope/telescope.nvim'}
-    use {'nvim-telescope/telescope-fzy-native.nvim'}
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
 
     -- File browsing
     use {'justinmk/vim-dirvish'}
