@@ -5,3 +5,5 @@
  brew "fzf"
  brew "stow"
  brew "tflint"
+ brew "efm"
+ brew "shellcheck"

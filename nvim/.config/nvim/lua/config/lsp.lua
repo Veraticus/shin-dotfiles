@@ -1,6 +1,26 @@
 local lspconfig = require('lspconfig')
 local lsp_status = require('lsp-status')
 local lspkind = require('lspkind')
+local configs = require 'lspconfig/configs'
+local util = require 'lspconfig/util'
+require "lsp.formatting"
+require "lsp.handlers"
+
+configs.terraformlsp = {
+    default_config = {
+        cmd = {"terraform-lsp"},
+        filetypes = {"terraform", "hcl"},
+        root_dir = util.root_pattern(".terraform", ".git")
+    },
+    docs = {
+        description = [[
+https://github.com/juliosueiras/terraform-lsp
+Terraform language server
+Download a released binary from https://github.com/hashicorp/terraform-ls/releases.
+]],
+        default_config = {root_dir = [[root_pattern(".terraform", ".git")]]}
+    }
+}
 
 vim.fn.sign_define("LspDiagnosticsSignError",
                    {text = "", numhl = "LspDiagnosticsDefaultError"})
@@ -100,7 +120,7 @@ local function make_on_attach(config)
                                         opts)
             vim.cmd [[augroup Format]]
             vim.cmd [[autocmd! * <buffer>]]
-            vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
+            vim.cmd [[autocmd BufWritePost <buffer> lua require'lsp.formatting'.format()]]
             vim.cmd [[augroup END]]
         end
 
@@ -119,6 +139,12 @@ local function make_on_attach(config)
     end
 end
 
+local luafmt = require "efm/luafmt"
+local golint = require "efm/golint"
+local prettier = require "efm/prettier"
+local shellcheck = require "efm/shellcheck"
+local terraform = require "efm/terraform"
+local misspell = require "efm/misspell"
 local servers = {
     bashls = {},
     cssls = {
@@ -126,6 +152,26 @@ local servers = {
         root_dir = lspconfig.util.root_pattern("package.json", ".git")
     },
     dockerls = {},
+    efm = {
+        init_options = {documentFormatting = true},
+        root_dir = vim.loop.cwd,
+        settings = {
+            languages = {
+                ["="] = {misspell},
+                lua = {luafmt},
+                go = {golint, goimports},
+                javascriptreact = {prettier, eslint},
+                yaml = {prettier},
+                json = {prettier},
+                html = {prettier},
+                scss = {prettier},
+                css = {prettier},
+                markdown = {prettier},
+                sh = {shellcheck},
+                tf = {terraform}
+            }
+        }
+    },
     gopls = {},
     html = {},
     rust_analyzer = {},
@@ -148,7 +194,18 @@ local servers = {
             }
         }
     },
-    tflint = {filetypes = {"tf", "terraform", "hcl"}},
+    terraformls = {
+        cmd = {"terraform-ls", "serve"},
+        filetypes = {"tf", "terraform", "hcl"}
+    },
+    terraformlsp = {
+        cmd = {"terraform-lsp"},
+        filetypes = {"tf", "terraform", "hcl"}
+    },
+    tflint = {
+        cmd = {"tflint", "--langserver"},
+        filetypes = {"tf", "terraform", "hcl"}
+    },
     vimls = {},
     yamlls = {}
 }

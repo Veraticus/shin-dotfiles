@@ -76,9 +76,9 @@ return require('packer').startup(function()
     use {'ray-x/lsp_signature.nvim'}
 
     -- Format
-    use {'andrejlevkovitch/vim-lua-format'}
     use {'Raimondi/delimitMate'}
     use {'cappyzawa/trim.nvim'}
+    use {'lukas-reineke/format.nvim'}
 
     -- Color picking
     use {'rrethy/vim-hexokinase', run = 'make hexokinase'}
