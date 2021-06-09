@@ -9,7 +9,7 @@ local format_options_var = function()
 end
 
 local format_options_prettier = {
-    tabWidth = 4,
+    tabWidth = 2,
     singleQuote = true,
     trailingComma = "all",
     configPrecedence = "prefer-file"

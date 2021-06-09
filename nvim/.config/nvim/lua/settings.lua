@@ -26,7 +26,8 @@ for i = 1, 10 do g['loaded_' .. disabled_built_ins[i]] = 1 end
 -- Settings
 local buffer = {o, bo}
 local window = {o, wo}
-opt('textwidth', 100, buffer)
+opt('textwidth', 0, buffer)
+opt('wrapmargin', 0, buffer)
 opt('scrolloff', 4)
 opt('wildignore', '*.o,*~,*.pyc')
 opt('wildmode', 'longest,full')
