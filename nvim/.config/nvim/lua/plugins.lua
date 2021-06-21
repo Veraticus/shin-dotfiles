@@ -28,8 +28,7 @@ return require('packer').startup(function()
     use {'mhinz/vim-sayonara', cmd = 'Sayonara'}
 
     -- File finding
-    use {'nvim-telescope/telescope.nvim'}
-    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use { 'camspiers/snap',rocks = {'fzy'} }
 
     -- File browsing
     use {'justinmk/vim-dirvish'}

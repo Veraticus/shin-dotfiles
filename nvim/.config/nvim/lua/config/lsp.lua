@@ -139,8 +139,6 @@ local function make_on_attach(config)
     end
 end
 
-local luafmt = require "efm/luafmt"
-local golint = require "efm/golint"
 local prettier = require "efm/prettier"
 local shellcheck = require "efm/shellcheck"
 local terraform = require "efm/terraform"
@@ -153,19 +151,16 @@ local servers = {
     },
     dockerls = {},
     efm = {
+        filetypes = {"lua", "js", "json", "yaml", "html", "md", "sh", "tf"},
         init_options = {documentFormatting = true},
         root_dir = vim.loop.cwd,
         settings = {
             languages = {
                 ["="] = {misspell},
-                lua = {luafmt},
-                go = {golint, goimports},
                 javascriptreact = {prettier, eslint},
                 yaml = {prettier},
                 json = {prettier},
                 html = {prettier},
-                scss = {prettier},
-                css = {prettier},
                 markdown = {prettier},
                 sh = {shellcheck},
                 tf = {terraform}
@@ -193,18 +188,6 @@ local servers = {
                 }
             }
         }
-    },
-    terraformls = {
-        cmd = {"terraform-ls", "serve"},
-        filetypes = {"tf", "terraform", "hcl"}
-    },
-    terraformlsp = {
-        cmd = {"terraform-lsp"},
-        filetypes = {"tf", "terraform", "hcl"}
-    },
-    tflint = {
-        cmd = {"tflint", "--langserver"},
-        filetypes = {"tf", "terraform", "hcl"}
     },
     vimls = {},
     yamlls = {}
