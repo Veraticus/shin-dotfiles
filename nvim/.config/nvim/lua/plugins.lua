@@ -10,6 +10,11 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function()
+    -- Be better?
+    use {'antonk52/bad-practices.nvim'}
+
+    -- Movement
+    use {'ggandor/lightspeed.nvim'}
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
@@ -86,6 +91,7 @@ return require('packer').startup(function()
     use {
         'nvim-treesitter/nvim-treesitter',
         requires = {
+            'RRethy/nvim-treesitter-textsubjects',
             'nvim-treesitter/nvim-treesitter-refactor',
             'nvim-treesitter/nvim-treesitter-textobjects'
         },

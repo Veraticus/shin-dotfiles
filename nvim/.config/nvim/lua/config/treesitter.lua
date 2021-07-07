@@ -5,5 +5,13 @@ require'nvim-treesitter.configs'.setup {
     incremental_selection = {enable = true},
     autotag = {enable = true},
     rainbow = {enable = true},
-    refactor = {highlight_definitions = {enable = true}}
+    refactor = {highlight_definitions = {enable = true}},
+    textsubjects = {
+        enable = true,
+        keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-big',
+        }
+    }
 }
+
