@@ -120,7 +120,7 @@ local function make_on_attach(config)
                                         opts)
             vim.cmd [[augroup Format]]
             vim.cmd [[autocmd! * <buffer>]]
-            vim.cmd [[autocmd BufWritePost <buffer> lua require'lsp.formatting'.format()]]
+            vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)]]
             vim.cmd [[augroup END]]
         end
 
