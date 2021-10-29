@@ -10,11 +10,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require('packer').startup(function()
-    -- Be better?
-    use {'antonk52/bad-practices.nvim'}
-
     -- Movement
     use {'ggandor/lightspeed.nvim'}
+
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
@@ -33,7 +31,11 @@ return require('packer').startup(function()
     use {'mhinz/vim-sayonara', cmd = 'Sayonara'}
 
     -- File finding
-    use { 'camspiers/snap',rocks = {'fzy'} }
+    use {
+      'nvim-telescope/telescope.nvim',
+      requires = { {'nvim-lua/plenary.nvim'} }
+    }
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
     -- File browsing
     use {'justinmk/vim-dirvish'}
@@ -71,13 +73,21 @@ return require('packer').startup(function()
     use {'neovim/nvim-lspconfig'}
     use {'nvim-lua/lsp-status.nvim'}
     use {'onsails/lspkind-nvim'}
-    use {'glepnir/lspsaga.nvim'}
+    use {'tami5/lspsaga.nvim'}
     use {'kosayoda/nvim-lightbulb'}
     use {'kabouzeid/nvim-lspinstall'}
-    use {'hrsh7th/nvim-compe'}
+    use {'hrsh7th/cmp-nvim-lsp'}
+    use {'hrsh7th/cmp-buffer'}
+    use {'hrsh7th/cmp-path'}
+    use {'hrsh7th/cmp-cmdline'}
+    use {'hrsh7th/nvim-cmp'}
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
     use {'ray-x/lsp_signature.nvim'}
+    use({
+      'weilbith/nvim-code-action-menu',
+      cmd = 'CodeActionMenu',
+    })
 
     -- Format
     use {'Raimondi/delimitMate'}
@@ -102,7 +112,7 @@ return require('packer').startup(function()
     use {'tpope/vim-commentary'}
 
     -- Indent
-    use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+    use {'lukas-reineke/indent-blankline.nvim'}
 
     -- Terminal
     use {'voldikss/vim-floaterm'}

@@ -13,10 +13,10 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: atlas-sandbox
-  currentCluster: arn:aws:eks:us-west-2:551926718202:cluster/atlas
+  currentContext: teleport.atlassandbox.io-00000000-0000-0000-0000-000000000001
+  currentCluster: teleport.atlassandbox.io
   clusters:
-    arn:aws:eks:us-west-2:551926718202:cluster/atlas:
+    teleport.atlassandbox.io:
       namespace:
         active: ""
         favorites:
