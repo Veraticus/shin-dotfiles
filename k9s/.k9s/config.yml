@@ -23,7 +23,7 @@ k9s:
         - all
         - default
       view:
-        active: po
+        active: plan
       featureGates:
         nodeShell: false
       shellPod:
