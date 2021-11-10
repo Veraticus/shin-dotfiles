@@ -13,7 +13,7 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: teleport.atlassandbox.io-00000000-0000-0000-0000-000000000001
+  currentContext: teleport.atlassandbox.io-00000000-0000-0000-0000-000000000003
   currentCluster: teleport.atlassandbox.io
   clusters:
     teleport.atlassandbox.io:
@@ -23,7 +23,7 @@ k9s:
         - all
         - default
       view:
-        active: plan
+        active: deployment
       featureGates:
         nodeShell: false
       shellPod:

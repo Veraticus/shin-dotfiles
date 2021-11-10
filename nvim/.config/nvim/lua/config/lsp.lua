@@ -172,7 +172,6 @@ local servers = {
             languages = {
                 ["="] = {misspell},
                 javascriptreact = {prettier, eslint},
-                yaml = {prettier},
                 json = {prettier},
                 html = {prettier},
                 markdown = {prettier},
