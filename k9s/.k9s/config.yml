@@ -13,17 +13,17 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: teleport.atlassandbox.io-00000000-0000-0000-0000-000000000003
-  currentCluster: teleport.atlassandbox.io
+  currentContext: platform
+  currentCluster: arn:aws:eks:us-west-2:179087280491:cluster/platform
   clusters:
-    teleport.atlassandbox.io:
+    arn:aws:eks:us-west-2:179087280491:cluster/platform:
       namespace:
         active: ""
         favorites:
         - all
         - default
       view:
-        active: deployment
+        active: po
       featureGates:
         nodeShell: false
       shellPod:

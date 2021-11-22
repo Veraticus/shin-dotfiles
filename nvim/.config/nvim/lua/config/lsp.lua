@@ -1,6 +1,6 @@
 local lspconfig = require('lspconfig')
+local coq = require "coq"
 local lsp_status = require('lsp-status')
-local lspkind = require('lspkind')
 local configs = require 'lspconfig/configs'
 local util = require 'lspconfig/util'
 require "lsp.formatting"
@@ -88,8 +88,8 @@ local function make_on_attach(config)
         if config.before then config.before(client) end
 
         lsp_status.on_attach(client)
-        require'lsp_signature'.on_attach()
         local opts = {noremap = true, silent = true}
+
         vim.api.nvim_buf_set_keymap(0, 'n', 'gh',
                                     [[<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]],
                                     opts)
@@ -127,6 +127,7 @@ local function make_on_attach(config)
                                     [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>]],
                                     opts)
 
+
         if client.resolved_capabilities.document_formatting or
             client.resolved_capabilities.document_range_formatting then
             vim.api.nvim_buf_set_keymap(0, 'n', '<leader>f',
@@ -136,17 +137,6 @@ local function make_on_attach(config)
             vim.cmd [[autocmd! * <buffer>]]
             vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)]]
             vim.cmd [[augroup END]]
-        end
-
-        if client.resolved_capabilities.document_highlight == true then
-            vim.api.nvim_command('augroup lsp_aucmds')
-            vim.api.nvim_command(
-                'au CursorHold <buffer> lua vim.lsp.buf.document_highlight()')
-            vim.api.nvim_command(
-                [[au CursorHold <buffer> lua require'lspsaga.diagnostic'.show_line_diagnostics()]])
-            vim.api.nvim_command(
-                'au CursorMoved <buffer> lua vim.lsp.buf.clear_references()')
-            vim.api.nvim_command('augroup END')
         end
 
         if config.after then config.after(client) end
@@ -246,5 +236,5 @@ for server, config in pairs(servers) do
                                       lsp_status.capabilities,
                                       snippet_capabilities)
 
-    lspconfig[server].setup(config)
+    lspconfig[server].setup(coq.lsp_ensure_capabilities(config))
 end

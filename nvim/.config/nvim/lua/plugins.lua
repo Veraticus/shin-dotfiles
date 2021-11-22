@@ -9,7 +9,9 @@ if fn.empty(fn.glob(install_path)) > 0 then
     execute 'packadd packer.nvim'
 end
 
-return require('packer').startup(function()
+require('packer').startup({function()
+    use 'lewis6991/impatient.nvim'
+
     -- Movement
     use {'ggandor/lightspeed.nvim'}
 
@@ -40,6 +42,10 @@ return require('packer').startup(function()
     -- File browsing
     use {'justinmk/vim-dirvish'}
     use {'kristijanhusak/vim-dirvish-git'}
+    use {
+      'phaazon/hop.nvim',
+      branch = 'v1',
+    }
 
     -- Project Management/Sessions
     use {
@@ -72,18 +78,11 @@ return require('packer').startup(function()
     -- LSP, Autocomplete, Hinting
     use {'neovim/nvim-lspconfig'}
     use {'nvim-lua/lsp-status.nvim'}
-    use {'onsails/lspkind-nvim'}
     use {'tami5/lspsaga.nvim'}
+    use {'ms-jpq/coq_nvim', branch = 'coq'}
+    use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
     use {'kosayoda/nvim-lightbulb'}
     use {'kabouzeid/nvim-lspinstall'}
-    use {'hrsh7th/cmp-nvim-lsp'}
-    use {'hrsh7th/cmp-buffer'}
-    use {'hrsh7th/cmp-path'}
-    use {'hrsh7th/cmp-cmdline'}
-    use {'hrsh7th/nvim-cmp'}
-    use {'hrsh7th/vim-vsnip'}
-    use {'hrsh7th/vim-vsnip-integ'}
-    use {'ray-x/lsp_signature.nvim'}
     use({
       'weilbith/nvim-code-action-menu',
       cmd = 'CodeActionMenu',
@@ -123,4 +122,11 @@ return require('packer').startup(function()
     -- Bufferline
     use {'akinsho/nvim-bufferline.lua'}
 
-end)
+  end,
+  config = {
+    -- Move to lua dir so impatient.nvim can cache it
+    compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
+  }})
+
+require('packer_compiled')
+require('impatient')
