@@ -13,10 +13,61 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: platform
-  currentCluster: arn:aws:eks:us-west-2:179087280491:cluster/platform
+  currentContext: teleport.atlaslive.io-c25fc39f-26e0-47bd-98bc-1fef45b59659
+  currentCluster: teleport.atlaslive.io
   clusters:
-    arn:aws:eks:us-west-2:179087280491:cluster/platform:
+    arn:aws:eks:us-west-2:504784758733:cluster/atlas:
+      namespace:
+        active: ""
+        favorites:
+        - all
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    prod.liveworld.com:
+      namespace:
+        active: ""
+        favorites:
+        - all
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlaslive.io:
+      namespace:
+        active: ""
+        favorites:
+        - all
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlassandbox.io:
       namespace:
         active: ""
         favorites:

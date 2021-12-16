@@ -34,8 +34,8 @@ zinit ice wait"0b" lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 # Autosuggestions & fast-syntax-highlighting
-zinit ice wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zinit light zdharma/fast-syntax-highlighting
+zinit ice wait lucid atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay; autoload bashcompinit && bashcompinit && source $(brew --prefix)/etc/bash_completion.d/ckutil"
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # zsh-autosuggestions
 zinit ice wait lucid atload"!_zsh_autosuggest_start"
@@ -43,7 +43,7 @@ zinit load zsh-users/zsh-autosuggestions
 
 zstyle ":history-search-multi-word" page-size "11"
 zinit ice wait"1" lucid
-zinit load zdharma/history-search-multi-word
+zinit load zdharma-continuum/history-search-multi-word
 
 zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
     atpull'%atclone' pick"clrs.zsh" nocompile'!' \

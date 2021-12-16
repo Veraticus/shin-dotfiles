@@ -17,7 +17,7 @@ if [ -d "${HOME}/.zinit/bin" ]; then
     echo "zinit installed"
 else
     mkdir ${HOME}/.zinit
-    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
     zsh -c "source ~/.zshrc && -zplg-scheduler burst && zinit compile --all  || true "
 fi
 
