@@ -3,6 +3,7 @@ k9s:
   maxConnRetry: 5
   enableMouse: false
   headless: true
+  logoless: false
   crumbsless: false
   readOnly: false
   noIcons: false
@@ -13,12 +14,12 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: teleport.atlaslive.io-c25fc39f-26e0-47bd-98bc-1fef45b59659
-  currentCluster: teleport.atlaslive.io
+  currentContext: atlas-sandbox
+  currentCluster: arn:aws:eks:us-west-2:551926718202:cluster/atlas
   clusters:
-    arn:aws:eks:us-west-2:504784758733:cluster/atlas:
+    arn:aws:eks:us-west-2:179087280491:cluster/platform:
       namespace:
-        active: ""
+        active: all
         favorites:
         - all
         - default
@@ -28,14 +29,16 @@ k9s:
         nodeShell: false
       shellPod:
         image: busybox:1.31
+        command: []
+        args: []
         namespace: default
         limits:
           cpu: 100m
           memory: 100Mi
       portForwardAddress: localhost
-    prod.liveworld.com:
+    arn:aws:eks:us-west-2:551926718202:cluster/atlas:
       namespace:
-        active: ""
+        active: all
         favorites:
         - all
         - default
@@ -45,40 +48,8 @@ k9s:
         nodeShell: false
       shellPod:
         image: busybox:1.31
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    teleport.atlaslive.io:
-      namespace:
-        active: ""
-        favorites:
-        - all
-        - default
-      view:
-        active: po
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.31
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    teleport.atlassandbox.io:
-      namespace:
-        active: ""
-        favorites:
-        - all
-        - default
-      view:
-        active: po
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.31
+        command: []
+        args: []
         namespace: default
         limits:
           cpu: 100m
@@ -91,3 +62,4 @@ k9s:
     memory:
       critical: 90
       warn: 70
+  screenDumpDir: /var/folders/8q/wbr57phn0179dqp0k5glmdrr0000gn/T/k9s-screens-joshsymonds
