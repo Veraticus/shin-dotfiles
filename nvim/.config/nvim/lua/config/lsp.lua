@@ -1,240 +1,201 @@
-local lspconfig = require('lspconfig')
-local coq = require "coq"
-local lsp_status = require('lsp-status')
-local configs = require 'lspconfig/configs'
-local util = require 'lspconfig/util'
-require "lsp.formatting"
-require "lsp.handlers"
+require('lua-dev').setup { lspconfig = { cmd = { 'lua-language-server' }, prefer_null_ls = true } }
 
-configs.terraformlsp = {
-    default_config = {
-        cmd = {"terraform-lsp"},
-        filetypes = {"terraform", "hcl"},
-        root_dir = util.root_pattern(".terraform", ".git")
-    },
-    docs = {
-        description = [[
-https://github.com/juliosueiras/terraform-lsp
-Terraform language server
-Download a released binary from https://github.com/hashicorp/terraform-ls/releases.
-]],
-        default_config = {root_dir = [[root_pattern(".terraform", ".git")]]}
-    }
+local lspconfig = require 'lspconfig'
+local trouble = require 'trouble'
+local null_ls = require 'null-ls'
+-- local lightbulb = require 'nvim-lightbulb'
+
+local lsp = vim.lsp
+local buf_keymap = vim.api.nvim_buf_set_keymap
+local cmd = vim.cmd
+
+-- vim.api.nvim_command 'hi link LightBulbFloatWin YellowFloat'
+-- vim.api.nvim_command 'hi link LightBulbVirtualText YellowFloat'
+
+local sign_define = vim.fn.sign_define
+sign_define('DiagnosticSignError', { text = '', numhl = 'RedSign' })
+sign_define('DiagnosticSignWarn', { text = '', numhl = 'YellowSign' })
+sign_define('DiagnosticSignInfo', { text = '', numhl = 'WhiteSign' })
+sign_define('DiagnosticSignHint', { text = '', numhl = 'BlueSign' })
+trouble.setup()
+-- lightbulb.setup {
+--   sign = { enabled = false },
+--   virtual_text = { enabled = true, text = '', hl_mode = 'blend' },
+--   float = { enabled = false, text = '', win_opts = { winblend = 100, anchor = 'NE' } },
+-- }
+
+vim.diagnostic.config { virtual_lines = { only_current_line = true }, virtual_text = false }
+lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+  virtual_text = false,
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+})
+
+local severity = {
+  'error',
+  'warn',
+  'info',
+  'hint', -- map both hint and info to info?
 }
 
-vim.fn.sign_define("LspDiagnosticsSignError",
-                   {text = "", numhl = "LspDiagnosticsDefaultError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-                   {text = "", numhl = "LspDiagnosticsDefaultWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-                   {text = "", numhl = "LspDiagnosticsDefaultInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint",
-                   {text = "", numhl = "LspDiagnosticsDefaultHint"})
-
-local texlab_search_status = vim.tbl_add_reverse_lookup {
-    Success = 0,
-    Error = 1,
-    Failure = 2,
-    Unconfigured = 3
-}
-
-lsp_status.config {
-    kind_labels = vim.g.completion_customize_lsp_label,
-    select_symbol = function(cursor_pos, symbol)
-        if symbol.valueRange then
-            local value_range = {
-                ['start'] = {
-                    character = 0,
-                    line = vim.fn.byte2line(symbol.valueRange[1])
-                },
-                ['end'] = {
-                    character = 0,
-                    line = vim.fn.byte2line(symbol.valueRange[2])
-                }
-            }
-
-            return require('lsp-status/util').in_range(cursor_pos, value_range)
-        end
-    end,
-    current_function = false
-}
-
-lsp_status.register_progress()
-
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = {spacing = 2, severity_limit = "Warning"},
-        signs = true,
-        update_in_insert = false,
-        underline = true
-    })
-
-vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-    if err ~= nil or result == nil then
-        return
-    end
-    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-        local view = vim.fn.winsaveview()
-        vim.lsp.util.apply_text_edits(result, bufnr)
-        vim.fn.winrestview(view)
-        if bufnr == vim.api.nvim_get_current_buf() then
-            vim.api.nvim_command("noautocmd :update")
-        end
-    end
+lsp.handlers['window/showMessage'] = function(err, method, params, client_id)
+  vim.notify(method.message, severity[params.type])
 end
 
-local function make_on_attach(config)
-    return function(client)
-        if config.before then config.before(client) end
+require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' } }
+local keymap_opts = { noremap = true, silent = true }
+local function on_attach(client)
+  require('lsp_signature').on_attach { bind = true, handler_opts = { border = 'single' } }
+  buf_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gd', '<cmd>lua require"telescope.builtin".lsp_definitions()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gi', '<cmd>lua require"telescope.builtin".lsp_implementations()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gS', '<cmd>lua vim.lsp.buf.signature_help()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gTD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', keymap_opts)
+  buf_keymap(0, 'n', '<leader>rn', '<cmd>lua require"renamer".rename()<CR>', keymap_opts)
+  buf_keymap(0, 'v', '<leader>rn', '<cmd>lua require"renamer".rename()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gr', '<cmd>lua require"telescope.builtin".lsp_references()<CR>', keymap_opts)
+  buf_keymap(0, 'n', 'gA', '<cmd>lua vim.lsp.buf.code_action()<CR>', keymap_opts)
+  buf_keymap(0, 'v', 'gA', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', keymap_opts)
+  buf_keymap(0, 'n', ']e', '<cmd>lua vim.diagnostic.goto_next { float = {scope = "line"} }<cr>', keymap_opts)
+  buf_keymap(0, 'n', '[e', '<cmd>lua vim.diagnostic.goto_prev { float = {scope = "line"} }<cr>', keymap_opts)
 
-        lsp_status.on_attach(client)
-        local opts = {noremap = true, silent = true}
+  if client.server_capabilities.documentFormattingProvider then
+    buf_keymap(0, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', keymap_opts)
+  end
 
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gh',
-                                    [[<cmd>lua require'lspsaga.provider'.lsp_finder()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gd',
-                                    [[<cmd>lua require'lspsaga.provider'.preview_definition()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'K',
-                                    [[<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gi',
-                                    '<cmd>lua vim.lsp.buf.implementation()<CR>',
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gs',
-                                    [[<cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gTD',
-                                    '<cmd>lua vim.lsp.buf.type_definition()<CR>',
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'gr',
-                                    [[<cmd>lua require('lspsaga.rename').rename()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'ca',
-                                    [[<cmd>lua require('lspsaga.codeaction').code_action()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', 'cd',
-                                    [[<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', '<leader>E',
-                                    '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>',
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', ']e',
-                                    [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>]],
-                                    opts)
-        vim.api.nvim_buf_set_keymap(0, 'n', '[e',
-                                    [[<cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>]],
-                                    opts)
+  cmd 'augroup lsp_aucmds'
+  if client.server_capabilities.documentHighlightProvider then
+    cmd 'au CursorHold <buffer> lua vim.lsp.buf.document_highlight()'
+    cmd 'au CursorMoved <buffer> lua vim.lsp.buf.clear_references()'
+  end
 
-
-        if client.resolved_capabilities.document_formatting or
-            client.resolved_capabilities.document_range_formatting then
-            vim.api.nvim_buf_set_keymap(0, 'n', '<leader>f',
-                                        '<cmd>lua vim.lsp.buf.formatting()<cr>',
-                                        opts)
-            vim.cmd [[augroup Format]]
-            vim.cmd [[autocmd! * <buffer>]]
-            vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)]]
-            vim.cmd [[augroup END]]
-        end
-
-        if config.after then config.after(client) end
-    end
+  -- cmd 'au CursorHold,CursorHoldI <buffer> lua require"nvim-lightbulb".update_lightbulb ()'
+  -- cmd 'au CursorHold,CursorHoldI <buffer> lua vim.diagnostic.open_float(0, { scope = "line" })'
+  cmd 'augroup END'
 end
 
-local prettier = require "efm/prettier"
-local shellcheck = require "efm/shellcheck"
-local terraform = require "efm/terraform"
-local misspell = require "efm/misspell"
+local function prefer_null_ls_fmt(client)
+  client.server_capabilities.documentHighlightProvider = false
+  client.server_capabilities.documentFormattingProvider = false
+  on_attach(client)
+end
+
 local servers = {
-    bashls = {},
-    cssls = {
-        filetypes = {"css", "scss", "less", "sass"},
-        root_dir = lspconfig.util.root_pattern("package.json", ".git")
+  bashls = {},
+  cmake = {},
+  jsonls = { prefer_null_ls = true, cmd = { 'vscode-json-languageserver', '--stdio' } },
+  julials = { settings = { julia = { format = { indent = 2 } } } },
+  gopls = {},
+  ocamllsp = {},
+  pyright = { settings = { python = { formatting = { provider = 'yapf' }, linting = { pytypeEnabled = true } } } },
+  rust_analyzer = {},
+  sumneko_lua = { prefer_null_ls = true },
+  -- sumneko_lua = {
+  --   prefer_null_ls = true,
+  --   cmd = { 'lua-language-server' },
+  --   settings = {
+  --     Lua = {
+  --       diagnostics = { globals = { 'vim' } },
+  --       runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
+  --       workspace = {
+  --         library = {
+  --           [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+  --           [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
+  texlab = {
+    settings = {
+      texlab = {
+        chktex = { onOpenAndSave = true },
+        formatterLineLength = 100,
+        forwardSearch = {
+          executable = 'sioyek',
+          args = { '--forward-search-file', '%f', '--forward-search-line', '%l', '%p' },
+        },
+      },
     },
-    dockerls = {},
-    efm = {
-        filetypes = {"lua", "js", "json", "yaml", "html", "md", "sh", "tf"},
-        init_options = {documentFormatting = true},
-        root_dir = vim.loop.cwd,
-        settings = {
-            languages = {
-                ["="] = {misspell},
-                javascriptreact = {prettier, eslint},
-                json = {prettier},
-                html = {prettier},
-                markdown = {prettier},
-                sh = {shellcheck},
-                tf = {terraform}
-            }
-        }
+  },
+  ltex = {
+    cmd = { '/usr/bin/ltex-ls' },
+    on_attach = function(client, bufnr)
+      require('ltex_extra').setup {}
+    end,
+    settings = {
+      ltex = {
+        checkFrequency = 'save',
+        additionalRules = { enablePickyRules = true },
+        ['ltex-ls'] = { path = '/opt/ltex-ls' },
+      },
     },
-    gopls = {},
-    html = {},
-    rust_analyzer = {},
-    sumneko_lua = {
-        cmd = {'lua-language-server'},
-        settings = {
-            Lua = {
-                diagnostics = {globals = {'vim'}},
-                -- completion = {keywordSnippet = 'Disable'},
-                runtime = {
-                    version = 'LuaJIT',
-                    path = vim.split(package.path, ';')
-                },
-                workspace = {
-                    library = {
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-                    }
-                }
-            }
-        }
-    },
-    vimls = {},
-    yamlls = {}
+  },
+  terraformls = {},
+  tsserver = {},
+  vimls = {},
+  yamlls = {},
 }
 
-local snippet_capabilities = {
-    textDocument = {completion = {completionItem = {snippetSupport = true}}}
-}
-
-local function deep_extend(policy, ...)
-    local result = {}
-    local function helper(policy, k, v1, v2)
-        if type(v1) ~= 'table' or type(v2) ~= 'table' then
-            if policy == 'error' then
-                error('Key ' .. vim.inspect(k) ..
-                          ' is already present with value ' .. vim.inspect(v1))
-            elseif policy == 'force' then
-                return v2
-            else
-                return v1
-            end
-        else
-            return deep_extend(policy, v1, v2)
-        end
-    end
-
-    for _, t in ipairs({...}) do
-        for k, v in pairs(t) do
-            if result[k] ~= nil then
-                result[k] = helper(policy, k, result[k], v)
-            else
-                result[k] = v
-            end
-        end
-    end
-
-    return result
-end
+local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+client_capabilities = require('cmp_nvim_lsp').update_capabilities(client_capabilities)
+client_capabilities.offsetEncoding = { 'utf-16' }
 
 for server, config in pairs(servers) do
-    config.on_attach = make_on_attach(config)
-    config.capabilities = deep_extend('keep', config.capabilities or {},
-                                      lsp_status.capabilities,
-                                      snippet_capabilities)
+  if config.prefer_null_ls then
+    if config.on_attach then
+      local old_on_attach = config.on_attach
+      config.on_attach = function(client, bufnr)
+        old_on_attach(client, bufnr)
+        prefer_null_ls_fmt(client)
+      end
+    else
+      config.on_attach = prefer_null_ls_fmt
+    end
+  elseif not config.on_attach then
+    config.on_attach = on_attach
+  end
 
-    lspconfig[server].setup(coq.lsp_ensure_capabilities(config))
+  config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, client_capabilities)
+  lspconfig[server].setup(config)
 end
+
+-- null-ls setup
+local null_fmt = null_ls.builtins.formatting
+local null_diag = null_ls.builtins.diagnostics
+local null_act = null_ls.builtins.code_actions
+null_ls.setup {
+  sources = {
+    null_diag.chktex,
+    -- null_diag.cppcheck,
+    -- null_diag.proselint,
+    -- null_diag.pylint,
+    null_diag.selene,
+    null_diag.shellcheck,
+    null_diag.teal,
+    -- null_diag.vale,
+    null_diag.vint,
+    -- null_diag.write_good.with { filetypes = { 'markdown', 'tex' } },
+    null_fmt.clang_format,
+    -- null_fmt.cmake_format,
+    null_fmt.isort,
+    null_fmt.prettier,
+    null_fmt.rustfmt,
+    null_fmt.shfmt,
+    null_fmt.stylua,
+    null_fmt.trim_whitespace,
+    null_fmt.yapf,
+    -- null_fmt.black
+    null_act.gitsigns,
+    -- null_act.refactoring.with { filetypes = { 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' } },
+  },
+  on_attach = on_attach,
+}
+
+require'lspconfig'.terraformls.setup{}
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = vim.lsp.buf.formatting_sync,
+})

@@ -1,15 +1,10 @@
 local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
-parser_configs.norg = {
-    install_info = {
-        url = "https://github.com/vhyrro/tree-sitter-norg",
-        files = { "src/parser.c" },
-        branch = "main"
-    },
-}
-
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained",
+    ensure_installed = "all",
+    ignore_install = {"lua"},
+    sync_install = false,
+    auto_install = true,
     highlight = {enable = true, additional_vim_regex_highlighting = true},
     indent = {enable = true},
     incremental_selection = {enable = true},
@@ -18,10 +13,12 @@ require'nvim-treesitter.configs'.setup {
     refactor = {highlight_definitions = {enable = true}},
     textsubjects = {
         enable = true,
+        prev_selection = ',', -- (Optional) keymap to select the previous selection
         keymaps = {
             ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-big',
-        }
-    }
+            [';'] = 'textsubjects-container-outer',
+            ['i;'] = 'textsubjects-container-inner',
+        },
+    },
 }
 
