@@ -24,14 +24,6 @@ trouble.setup()
 --   float = { enabled = false, text = '', win_opts = { winblend = 100, anchor = 'NE' } },
 -- }
 
-vim.diagnostic.config { virtual_lines = { only_current_line = true }, virtual_text = false }
-lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-  virtual_text = false,
-  signs = true,
-  update_in_insert = false,
-  underline = true,
-})
-
 local severity = {
   'error',
   'warn',

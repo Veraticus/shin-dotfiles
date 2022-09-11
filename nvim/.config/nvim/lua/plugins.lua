@@ -98,6 +98,7 @@ local function init()
     use {
       "catppuccin/nvim",
       as = "catppuccin",
+      run = ":CatppuccinCompile",
       config = [[require('config.cattpuccin')]]
     }
 
