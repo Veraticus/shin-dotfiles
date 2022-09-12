@@ -125,7 +125,7 @@ local servers = {
       },
     },
   },
-  terraformls = {},
+  terraformls = { prefer_null_ls = true },
   tsserver = {},
   vimls = {},
   yamlls = {},
@@ -186,8 +186,3 @@ null_ls.setup {
   on_attach = on_attach,
 }
 
-require'lspconfig'.terraformls.setup{}
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-  pattern = {"*.tf", "*.tfvars"},
-  callback = vim.lsp.buf.formatting_sync,
-})
