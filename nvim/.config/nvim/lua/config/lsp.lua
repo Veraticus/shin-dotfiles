@@ -35,10 +35,10 @@ lsp.handlers['window/showMessage'] = function(err, method, params, client_id)
   vim.notify(method.message, severity[params.type])
 end
 
-require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' } }
+require('lsp_signature').setup { bind = true, handler_opts = { border = 'single' }, floating_window_off_y = -1}
 local keymap_opts = { noremap = true, silent = true }
 local function on_attach(client)
-  require('lsp_signature').on_attach { bind = true, handler_opts = { border = 'single' } }
+  require('lsp_signature').on_attach { bind = true, handler_opts = { border = 'single' }, floating_window_off_y = -1}
   buf_keymap(0, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', keymap_opts)
   buf_keymap(0, 'n', 'gd', '<cmd>lua require"telescope.builtin".lsp_definitions()<CR>', keymap_opts)
   buf_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', keymap_opts)
