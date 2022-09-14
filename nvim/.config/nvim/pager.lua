@@ -1,4 +1,6 @@
-require 'init'
+package.path = package.path .. ';' .. os.getenv( "HOME" ) .. '/.config/nvim/?.lua'
+
+require('init')
 
 local opt = vim.opt
 local g = vim.g

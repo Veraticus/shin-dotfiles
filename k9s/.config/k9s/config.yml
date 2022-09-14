@@ -14,16 +14,36 @@ k9s:
     fullScreenLogs: true
     textWrap: false
     showTime: false
-  currentContext: teleport.atlaslive.io-2673bfe7-ecc5-4839-9c21-5fb2a29cab33
-  currentCluster: teleport.atlaslive.io
+  currentContext: teleport.atlasoffice.io-4c76a509-3367-4a0e-9511-55e53f4cdcdd
+  currentCluster: teleport.atlasoffice.io
   clusters:
-    teleport.atlaslive.io:
+    teleport.atlasoffice.io:
       namespace:
         active: all
         favorites:
+        - all
         - default
       view:
         active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlassandbox.io:
+      namespace:
+        active: all
+        favorites:
+        - all
+        - default
+      view:
+        active: cronjob
       featureGates:
         nodeShell: false
       shellPod:
