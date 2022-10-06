@@ -6,48 +6,30 @@ k9s:
   logoless: false
   crumbsless: false
   readOnly: false
+  noExitOnCtrlC: false
   noIcons: false
   logger:
     tail: 100
     buffer: 5000
     sinceSeconds: 60
     fullScreenLogs: true
-    textWrap: false
+    textWrap: true
     showTime: false
-  currentContext: teleport.atlasoffice.io-4c76a509-3367-4a0e-9511-55e53f4cdcdd
-  currentCluster: teleport.atlasoffice.io
+  currentContext: atlas-sandbox
+  currentCluster: arn:aws:eks:us-west-2:551926718202:cluster/atlas
   clusters:
-    teleport.atlasoffice.io:
+    arn:aws:eks:us-west-2:551926718202:cluster/atlas:
       namespace:
         active: all
+        lockFavorites: false
         favorites:
-        - all
         - default
       view:
         active: po
       featureGates:
         nodeShell: false
       shellPod:
-        image: busybox:1.31
-        command: []
-        args: []
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    teleport.atlassandbox.io:
-      namespace:
-        active: all
-        favorites:
-        - all
-        - default
-      view:
-        active: cronjob
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.31
+        image: busybox:1.35.0
         command: []
         args: []
         namespace: default
@@ -62,4 +44,4 @@ k9s:
     memory:
       critical: 90
       warn: 70
-  screenDumpDir: /var/folders/8q/wbr57phn0179dqp0k5glmdrr0000gn/T/k9s-screens-joshsymonds
+  screenDumpDir: /var/folders/s7/ytvt6rlj26x6z_4dwgg35nrr0000gn/T/k9s-screens-joshsymonds

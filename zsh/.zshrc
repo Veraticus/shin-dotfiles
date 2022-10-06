@@ -1,6 +1,8 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.zsh
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # all of our zsh files
 typeset -U config_files
 config_files=($ZSH/**/*.zsh)
