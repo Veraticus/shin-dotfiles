@@ -1,4 +1,4 @@
-require('lua-dev').setup { lspconfig = { cmd = { 'lua-language-server' }, prefer_null_ls = true } }
+require('neodev').setup { lspconfig = { cmd = { 'lua-language-server' }, prefer_null_ls = true } }
 
 local lspconfig = require 'lspconfig'
 local trouble = require 'trouble'
@@ -83,23 +83,6 @@ local servers = {
   ocamllsp = {},
   pyright = { settings = { python = { formatting = { provider = 'yapf' }, linting = { pytypeEnabled = true } } } },
   rust_analyzer = {},
-  sumneko_lua = { prefer_null_ls = true },
-  -- sumneko_lua = {
-  --   prefer_null_ls = true,
-  --   cmd = { 'lua-language-server' },
-  --   settings = {
-  --     Lua = {
-  --       diagnostics = { globals = { 'vim' } },
-  --       runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
-  --       workspace = {
-  --         library = {
-  --           [vim.fn.expand '$VIMRUNTIME/lua'] = true,
-  --           [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
   texlab = {
     settings = {
       texlab = {
@@ -113,7 +96,7 @@ local servers = {
     },
   },
   ltex = {
-    cmd = { '/usr/bin/ltex-ls' },
+    cmd = { '/opt/homebrew/bin/ltex-ls' },
     on_attach = function(client, bufnr)
       require('ltex_extra').setup {}
     end,
@@ -132,7 +115,7 @@ local servers = {
 }
 
 local client_capabilities = vim.lsp.protocol.make_client_capabilities()
-client_capabilities = require('cmp_nvim_lsp').update_capabilities(client_capabilities)
+client_capabilities = require('cmp_nvim_lsp').default_capabilities(client_capabilities)
 client_capabilities.offsetEncoding = { 'utf-16' }
 
 for server, config in pairs(servers) do

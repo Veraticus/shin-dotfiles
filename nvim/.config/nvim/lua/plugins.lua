@@ -241,8 +241,9 @@ local function init()
       'neovim/nvim-lspconfig',
       config = [[require('config.lsp')]],
     }
-    use{'folke/trouble.nvim'}
-    use{'ray-x/lsp_signature.nvim'}
+    use {'barreiroleo/ltex-extra.nvim'}
+    use {'folke/trouble.nvim'}
+    use {'ray-x/lsp_signature.nvim'}
     use {'nvim-lua/lsp-status.nvim'}
     use {'kosayoda/nvim-lightbulb',  requires = 'antoinemadec/FixCursorHold.nvim'}
     use {
@@ -288,7 +289,7 @@ local function init()
     use { 'ThePrimeagen/refactoring.nvim', disable = true }
 
     -- Plugin development
-    use 'folke/lua-dev.nvim'
+    use 'folke/neodev.nvim'
 
     -- Format
     use {'Raimondi/delimitMate'}

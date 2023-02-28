@@ -15,10 +15,67 @@ k9s:
     fullScreenLogs: true
     textWrap: true
     showTime: false
-  currentContext: atlas-sandbox
-  currentCluster: arn:aws:eks:us-west-2:551926718202:cluster/atlas
+  currentContext: platform
+  currentCluster: arn:aws:eks:us-west-2:179087280491:cluster/platform
   clusters:
-    arn:aws:eks:us-west-2:551926718202:cluster/atlas:
+    arn:aws:eks:us-west-2:179087280491:cluster/platform:
+      namespace:
+        active: all
+        lockFavorites: false
+        favorites:
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.35.0
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    arn:aws:eks:us-west-2:602864681186:cluster/atlas:
+      namespace:
+        active: all
+        lockFavorites: false
+        favorites:
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.35.0
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlaslive.io:
+      namespace:
+        active: all
+        lockFavorites: false
+        favorites:
+        - default
+      view:
+        active: po
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.35.0
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    teleport.atlasoffice.io:
       namespace:
         active: all
         lockFavorites: false
