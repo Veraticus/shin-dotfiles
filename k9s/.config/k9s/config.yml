@@ -15,17 +15,17 @@ k9s:
     fullScreenLogs: true
     textWrap: true
     showTime: false
-  currentContext: platform
-  currentCluster: arn:aws:eks:us-west-2:179087280491:cluster/platform
+  currentContext: atlas-sandbox
+  currentCluster: arn:aws:eks:us-west-2:551926718202:cluster/atlas
   clusters:
-    arn:aws:eks:us-west-2:179087280491:cluster/platform:
+    arn:aws:eks:us-west-2:504784758733:cluster/atlas:
       namespace:
         active: all
         lockFavorites: false
         favorites:
         - default
       view:
-        active: po
+        active: svc
       featureGates:
         nodeShell: false
       shellPod:
@@ -37,45 +37,7 @@ k9s:
           cpu: 100m
           memory: 100Mi
       portForwardAddress: localhost
-    arn:aws:eks:us-west-2:602864681186:cluster/atlas:
-      namespace:
-        active: all
-        lockFavorites: false
-        favorites:
-        - default
-      view:
-        active: po
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.35.0
-        command: []
-        args: []
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    teleport.atlaslive.io:
-      namespace:
-        active: all
-        lockFavorites: false
-        favorites:
-        - default
-      view:
-        active: po
-      featureGates:
-        nodeShell: false
-      shellPod:
-        image: busybox:1.35.0
-        command: []
-        args: []
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-      portForwardAddress: localhost
-    teleport.atlasoffice.io:
+    arn:aws:eks:us-west-2:551926718202:cluster/atlas:
       namespace:
         active: all
         lockFavorites: false
